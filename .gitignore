@@ -1,0 +1,14 @@
+node_modules
+dist
+.vite
+
+# Local env files: Vite loads .env.local / .env.<mode>, keep the template only
+.env
+.env.*
+!.env.example
+
+.DS_Store
+*.log
+npm-debug.log*
+.vscode/
+.idea/
