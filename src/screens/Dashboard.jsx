@@ -214,7 +214,7 @@ export default function Dashboard({ client, user, onSignOut }) {
             </form>
           ) : (
             <div>
-              <h2>
+              <h1>
                 {activeProperty?.name || 'Your properties'}
                 {activeProperty && (
                   <button
@@ -233,7 +233,7 @@ export default function Dashboard({ client, user, onSignOut }) {
                     <Pencil size={14} />
                   </button>
                 )}
-              </h2>
+              </h1>
               <p className="muted">
                 {activeProperty
                   ? [activeProperty.city, activeProperty.address].filter(Boolean).join(' - ') || 'Owner dashboard'
