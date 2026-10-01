@@ -1,0 +1,12 @@
+import React,{useEffect,useState} from 'react';
+import {Building2,ShieldCheck} from 'lucide-react';
+import {Banner,Button} from '../components/ui';
+import {errorMessage} from '../lib/api';
+let sdkPromise;
+function loadCashfree(){if(window.Cashfree)return Promise.resolve(window.Cashfree);if(!sdkPromise)sdkPromise=new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://sdk.cashfree.com/js/v3/cashfree.js';s.async=true;s.onload=()=>resolve(window.Cashfree);s.onerror=()=>reject(new Error('Unable to load secure checkout.'));document.head.appendChild(s)});return sdkPromise}
+export default function BillingScreen({client,entitlement,onActive,onSignOut}){
+ const [busy,setBusy]=useState(false),[error,setError]=useState('');const [status,setStatus]=useState(entitlement);
+ useEffect(()=>{if(new URLSearchParams(window.location.search).get('billing')==='return'){setBusy(true);client.post('/billing/sync').then(r=>{setStatus(r.data.entitlement);if(r.data.entitlement.hasAccess)onActive(r.data.entitlement)}).catch(e=>setError(errorMessage(e,'We could not confirm the subscription yet. Try again.'))).finally(()=>setBusy(false))}},[]);
+ async function subscribe(){try{setBusy(true);setError('');const {data}=await client.post('/billing/checkout');const Cashfree=await loadCashfree();const cashfree=Cashfree({mode:data.mode==='production'?'production':'sandbox'});await cashfree.subscriptionsCheckout({subsSessionId:data.subscriptionSessionId,redirectTarget:'_self'});}catch(e){setError(errorMessage(e,'Unable to start secure checkout.'))}finally{setBusy(false)}}
+ return <main className="auth-shell"><section className="auth-card billing-card"><div className="auth-brand"><span className="brand-mark"><Building2 size={20}/></span><div><strong>PG Manager</strong><p>Plan & billing</p></div></div><h1>{status?.status==='TRIAL'?'Your free trial':'Subscription required'}</h1><p className="auth-subtitle">{status?.status==='TRIAL'?(status.daysRemaining+' day'+(status.daysRemaining===1?'':'s')+' remaining in your 10-day trial.'):'Your trial has ended. Subscribe on the PG Manager website to continue using the service.'}</p><Banner>{error}</Banner><div className="billing-security"><ShieldCheck size={20}/><span>Checkout is handled by Cashfree. PG Manager never receives or stores your card, UPI PIN or bank credentials.</span></div><Button onClick={subscribe} loading={busy}>Continue to secure subscription</Button><Button variant="ghost" onClick={onSignOut}>Sign out</Button></section></main>
+}
