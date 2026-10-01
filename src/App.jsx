@@ -12,6 +12,7 @@ import { authPost, createApiClient } from './lib/api';
 import Dashboard from './screens/Dashboard';
 import LoginScreen from './screens/LoginScreen';
 import BillingScreen from './screens/BillingScreen';
+import DeleteAccountScreen from './screens/DeleteAccountScreen';
 
 const navItems = [
   { label: 'Product', href: '#features' },
@@ -285,6 +286,7 @@ function MarketingPage({ onOpenApp }) {
             <div>
               <span>Account</span>
               <button type="button" className="text-button" onClick={onOpenApp}>Open app</button>
+              <a href="#delete-account">Delete account</a>
             </div>
           </div>
         </div>
@@ -293,7 +295,7 @@ function MarketingPage({ onOpenApp }) {
   );
 }
 
-function AppExperience() {
+function AppExperience({ deletionMode = false, onExitDeletion }) {
   // The access token lives in a ref so the API client stays stable: rebuilding
   // it on every refresh would remount the dashboard and refetch everything.
   const accessToken = useRef('');
@@ -350,6 +352,7 @@ function AppExperience() {
   }
 
   if (!signedIn) return <LoginScreen onSignedIn={applySession} />;
+  if (deletionMode) return <DeleteAccountScreen client={client} onDeleted={() => { endSession(); onExitDeletion(); }} onBack={onExitDeletion} />;
   if (!entitlement) return <main className="auth-shell"><span className="spinner spinner-lg" aria-label="Loading subscription" /></main>;
   if (!entitlement.hasAccess) return <BillingScreen client={client} entitlement={entitlement} onActive={setEntitlement} onSignOut={signOut} />;
 
@@ -359,12 +362,16 @@ function AppExperience() {
 export default function App() {
   const [view, setView] = useState(() => {
     if (typeof window === 'undefined') return 'marketing';
-    return window.location.hash === '#app' ? 'app' : 'marketing';
+    return window.location.hash === '#delete-account' ? 'delete' : window.location.hash === '#app' ? 'app' : 'marketing';
   });
 
   useEffect(() => {
     if (view === 'app') {
       window.location.hash = '#app';
+      return;
+    }
+    if (view === 'delete') {
+      window.location.hash = '#delete-account';
       return;
     }
 
@@ -374,5 +381,6 @@ export default function App() {
   }, [view]);
 
   if (view === 'app') return <AppExperience />;
+  if (view === 'delete') return <AppExperience deletionMode onExitDeletion={() => setView('marketing')} />;
   return <MarketingPage onOpenApp={() => setView('app')} />;
 }
