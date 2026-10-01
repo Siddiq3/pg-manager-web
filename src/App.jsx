@@ -51,7 +51,7 @@ const faqs = [
   { question: 'Can I monitor rent due and pending payments?', answer: 'Yes. The rent-cycle view shows each month, the amount due, what is paid and what is still pending.' },
 ];
 
-function MarketingPage({ onOpenApp }) {
+function MarketingPage({ onOpenApp, onDeleteAccount }) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
@@ -286,7 +286,7 @@ function MarketingPage({ onOpenApp }) {
             <div>
               <span>Account</span>
               <button type="button" className="text-button" onClick={onOpenApp}>Open app</button>
-              <a href="#delete-account">Delete account</a>
+              <button type="button" className="text-button" onClick={onDeleteAccount}>Delete account</button>
             </div>
           </div>
         </div>
@@ -382,5 +382,5 @@ export default function App() {
 
   if (view === 'app') return <AppExperience />;
   if (view === 'delete') return <AppExperience deletionMode onExitDeletion={() => setView('marketing')} />;
-  return <MarketingPage onOpenApp={() => setView('app')} />;
+  return <MarketingPage onOpenApp={() => setView('app')} onDeleteAccount={() => setView('delete')} />;
 }
