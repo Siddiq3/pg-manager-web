@@ -334,6 +334,8 @@ function AppExperience() {
       .finally(() => setRestoring(false));
   }, [applySession]);
 
+  useEffect(() => { if (!signedIn) { setEntitlement(null); return; } client.get('/billing/status').then(r => setEntitlement(r.data.entitlement)).catch(() => setEntitlement(null)); }, [signedIn, client]);
+
   async function signOut() {
     await authPost('/auth/logout', {}).catch(() => null);
     endSession();
@@ -346,8 +348,6 @@ function AppExperience() {
       </main>
     );
   }
-
-  useEffect(() => { if (!signedIn) { setEntitlement(null); return; } client.get('/billing/status').then(r => setEntitlement(r.data.entitlement)).catch(() => setEntitlement(null)); }, [signedIn, client]);
 
   if (!signedIn) return <LoginScreen onSignedIn={applySession} />;
   if (!entitlement) return <main className="auth-shell"><span className="spinner spinner-lg" aria-label="Loading subscription" /></main>;
