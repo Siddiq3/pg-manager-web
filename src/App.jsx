@@ -13,6 +13,7 @@ import Dashboard from './screens/Dashboard';
 import LoginScreen from './screens/LoginScreen';
 import BillingScreen from './screens/BillingScreen';
 import DeleteAccountScreen from './screens/DeleteAccountScreen';
+import BillingStatusErrorScreen from './screens/BillingStatusErrorScreen';
 
 const navItems = [
   { label: 'Product', href: '#features' },
@@ -303,6 +304,9 @@ function AppExperience({ deletionMode = false, onExitDeletion }) {
   const [signedIn, setSignedIn] = useState(false);
   const [restoring, setRestoring] = useState(true);
   const [entitlement, setEntitlement] = useState(null);
+  const [entitlementState, setEntitlementState] = useState('idle');
+  const [entitlementError, setEntitlementError] = useState('');
+  const [localDeletion, setLocalDeletion] = useState(false);
 
   const applySession = useCallback((data) => {
     accessToken.current = data.accessToken;
@@ -336,7 +340,13 @@ function AppExperience({ deletionMode = false, onExitDeletion }) {
       .finally(() => setRestoring(false));
   }, [applySession]);
 
-  useEffect(() => { if (!signedIn) { setEntitlement(null); return; } client.get('/billing/status').then(r => setEntitlement(r.data.entitlement)).catch(() => setEntitlement(null)); }, [signedIn, client]);
+  const loadEntitlement = useCallback(async () => {
+    if (!signedIn) { setEntitlement(null); setEntitlementState('idle'); setEntitlementError(''); return; }
+    setEntitlementState('loading'); setEntitlementError('');
+    try { const { data } = await client.get('/billing/status'); setEntitlement(data.entitlement); setEntitlementState('ready'); }
+    catch (error) { setEntitlement(null); setEntitlementState('error'); setEntitlementError(error?.response?.data?.message || 'Unable to verify your subscription right now.'); }
+  }, [signedIn, client]);
+  useEffect(() => { loadEntitlement(); }, [loadEntitlement]);
 
   async function signOut() {
     await authPost('/auth/logout', {}).catch(() => null);
@@ -352,9 +362,10 @@ function AppExperience({ deletionMode = false, onExitDeletion }) {
   }
 
   if (!signedIn) return <LoginScreen onSignedIn={applySession} />;
-  if (deletionMode) return <DeleteAccountScreen client={client} onDeleted={() => { endSession(); onExitDeletion(); }} onBack={onExitDeletion} />;
-  if (!entitlement) return <main className="auth-shell"><span className="spinner spinner-lg" aria-label="Loading subscription" /></main>;
-  if (!entitlement.hasAccess) return <BillingScreen client={client} entitlement={entitlement} onActive={setEntitlement} onSignOut={signOut} />;
+  if (deletionMode || localDeletion) return <DeleteAccountScreen client={client} onDeleted={() => { endSession(); onExitDeletion?.(); }} onBack={() => localDeletion ? setLocalDeletion(false) : onExitDeletion?.()} />;
+  if (entitlementState === 'idle' || entitlementState === 'loading') return <main className="auth-shell"><span className="spinner spinner-lg" aria-label="Loading subscription" /></main>;
+  if (entitlementState === 'error') return <BillingStatusErrorScreen message={entitlementError} onRetry={loadEntitlement} onSignOut={signOut} onDelete={() => setLocalDeletion(true)} />;
+  if (!entitlement.hasAccess) return <BillingScreen client={client} entitlement={entitlement} onActive={(next) => { setEntitlement(next); setEntitlementState('ready'); }} onSignOut={signOut} />;
 
   return <Dashboard client={client} user={user} onSignOut={signOut} />;
 }
