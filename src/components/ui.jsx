@@ -26,7 +26,7 @@ export function Stat({ icon, label, value, hint, tone = 'default' }) {
   );
 }
 
-const BADGE_TONES = { PAID: 'ok', PARTIAL: 'warn', PENDING: 'danger', ACTIVE: 'ok', VACATED: 'muted', VACANT: 'ok', OCCUPIED: 'muted' };
+const BADGE_TONES = { PAID: 'ok', PARTIAL: 'warn', PENDING: 'warn', OVERDUE: 'danger', ACTIVE: 'ok', VACATED: 'muted', VACANT: 'ok', OCCUPIED: 'info', AVAILABLE: 'ok', INACTIVE: 'muted', COMPLETED: 'ok', CANCELLED: 'muted' };
 
 export function Badge({ children, tone }) {
   return <span className={`badge badge-${tone || BADGE_TONES[children] || 'muted'}`}>{children}</span>;
@@ -77,15 +77,15 @@ export function Field({ label, hint, error, ...inputProps }) {
   return (
     <div className="field">
       <label htmlFor={id}>{label}</label>
-      <input id={id} aria-invalid={error ? 'true' : undefined} {...inputProps} />
-      {error ? <span className="field-error">{error}</span> : hint ? <span className="field-hint">{hint}</span> : null}
+      <input id={id} aria-describedby={error || hint ? `${id}-help` : undefined} aria-invalid={error ? 'true' : undefined} {...inputProps} />
+      {error ? <span id={`${id}-help`} className="field-error">{error}</span> : hint ? <span id={`${id}-help`} className="field-hint">{hint}</span> : null}
     </div>
   );
 }
 
-export function Button({ children, variant = 'primary', loading = false, disabled, ...rest }) {
+export function Button({ children, variant = 'primary', loading = false, disabled, className = '', ...rest }) {
   return (
-    <button className={`btn btn-${variant}`} disabled={disabled || loading} {...rest}>
+    <button className={`btn btn-${variant} ${className}`.trim()} aria-busy={loading || undefined} disabled={disabled || loading} {...rest}>
       {loading ? <span className="spinner" aria-hidden="true" /> : null}
       {children}
     </button>
