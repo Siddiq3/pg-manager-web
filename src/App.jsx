@@ -11,6 +11,7 @@ import {
 import { authPost, createApiClient } from './lib/api';
 import Dashboard from './screens/Dashboard';
 import LoginScreen from './screens/LoginScreen';
+import BillingScreen from './screens/BillingScreen';
 
 const navItems = [
   { label: 'Product', href: '#features' },
@@ -299,6 +300,7 @@ function AppExperience() {
   const [user, setUser] = useState(null);
   const [signedIn, setSignedIn] = useState(false);
   const [restoring, setRestoring] = useState(true);
+  const [entitlement, setEntitlement] = useState(null);
 
   const applySession = useCallback((data) => {
     accessToken.current = data.accessToken;
@@ -332,6 +334,8 @@ function AppExperience() {
       .finally(() => setRestoring(false));
   }, [applySession]);
 
+  useEffect(() => { if (!signedIn) { setEntitlement(null); return; } client.get('/billing/status').then(r => setEntitlement(r.data.entitlement)).catch(() => setEntitlement(null)); }, [signedIn, client]);
+
   async function signOut() {
     await authPost('/auth/logout', {}).catch(() => null);
     endSession();
@@ -346,6 +350,8 @@ function AppExperience() {
   }
 
   if (!signedIn) return <LoginScreen onSignedIn={applySession} />;
+  if (!entitlement) return <main className="auth-shell"><span className="spinner spinner-lg" aria-label="Loading subscription" /></main>;
+  if (!entitlement.hasAccess) return <BillingScreen client={client} entitlement={entitlement} onActive={setEntitlement} onSignOut={signOut} />;
 
   return <Dashboard client={client} user={user} onSignOut={signOut} />;
 }
