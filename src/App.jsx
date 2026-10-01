@@ -351,7 +351,7 @@ function AppExperience() {
 
   if (!signedIn) return <LoginScreen onSignedIn={applySession} />;
   if (!entitlement) return <main className="auth-shell"><span className="spinner spinner-lg" aria-label="Loading subscription" /></main>;
-  if (!entitlement.hasAccess || entitlement.status === 'TRIAL') return <BillingScreen client={client} entitlement={entitlement} onActive={setEntitlement} onSignOut={signOut} />;
+  if (!entitlement.hasAccess) return <BillingScreen client={client} entitlement={entitlement} onActive={setEntitlement} onSignOut={signOut} />;
 
   return <Dashboard client={client} user={user} onSignOut={signOut} />;
 }
