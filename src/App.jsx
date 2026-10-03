@@ -300,6 +300,7 @@ function AppExperience({ deletionMode = false, onExitDeletion }) {
   // The access token lives in a ref so the API client stays stable: rebuilding
   // it on every refresh would remount the dashboard and refetch everything.
   const accessToken = useRef('');
+  const restoreStarted = useRef(false);
   const [user, setUser] = useState(null);
   const [signedIn, setSignedIn] = useState(false);
   const [restoring, setRestoring] = useState(true);
@@ -334,6 +335,8 @@ function AppExperience({ deletionMode = false, onExitDeletion }) {
   );
 
   useEffect(() => {
+    if (restoreStarted.current) return;
+    restoreStarted.current = true;
     authPost('/auth/refresh', {})
       .then(({ data }) => applySession(data))
       .catch(() => {})
