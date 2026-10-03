@@ -5,7 +5,7 @@ import { dueLabel, initials, money, shortDate } from '../lib/format';
 import { Badge, Banner, Button, Card, EmptyState, Field, Skeleton, Stat, Table } from '../components/ui';
 import RoomsManager from './RoomsManager';
 
-const EMPTY = { dashboard: null, rooms: [], beds: [], tenants: [], rentCycles: [] };
+const EMPTY = { rooms: [], beds: [], tenants: [], rentCycles: [] };
 
 export default function Dashboard({ client, user, onSignOut }) {
   const [properties, setProperties] = useState([]);
@@ -23,58 +23,101 @@ export default function Dashboard({ client, user, onSignOut }) {
   // otherwise lets a slow earlier response overwrite the current one.
   const loadId = useRef(0);
 
-  const load = useCallback(
-    async (targetPropertyId) => {
+  const fetchPropertyData = useCallback(
+    async (activeId) => {
+      const [rooms, bedList, tenants, rentCycles] = await Promise.all([
+        client.get('/rooms', { params: { propertyId: activeId } }),
+        client.get('/beds', { params: { propertyId: activeId } }),
+        client.get('/tenants', { params: { propertyId: activeId } }),
+        client.get('/rent-cycles', { params: { propertyId: activeId } }),
+      ]);
+      return {
+        rooms: rooms.data.data,
+        beds: bedList.data.data,
+        tenants: tenants.data.data,
+        rentCycles: rentCycles.data.data,
+      };
+    },
+    [client]
+  );
+
+  const loadPropertyData = useCallback(
+    async (activeId) => {
       const requestId = (loadId.current += 1);
+      setPropertyId(activeId);
       setLoading(true);
       setError('');
 
+      if (!activeId) {
+        setData(EMPTY);
+        setLoading(false);
+        return;
+      }
+
       try {
-        const propertyList = (await client.get('/properties')).data.data;
-        const activeId = targetPropertyId && propertyList.some((p) => p._id === targetPropertyId)
-          ? targetPropertyId
-          : propertyList[0]?._id || '';
-
+        const next = await fetchPropertyData(activeId);
         if (requestId !== loadId.current) return;
-        setProperties(propertyList);
-        setPropertyId(activeId);
-
-        if (!activeId) {
-          setData(EMPTY);
-          return;
-        }
-
-        const [dashboard, rooms, bedList, tenants, rentCycles] = await Promise.all([
-          client.get(`/properties/${activeId}/dashboard`),
-          client.get('/rooms', { params: { propertyId: activeId } }),
-          client.get('/beds', { params: { propertyId: activeId } }),
-          client.get('/tenants', { params: { propertyId: activeId } }),
-          client.get('/rent-cycles', { params: { propertyId: activeId } }),
-        ]);
-
-        if (requestId !== loadId.current) return;
-        setData({
-          dashboard: dashboard.data.data,
-          rooms: rooms.data.data,
-          beds: bedList.data.data,
-          tenants: tenants.data.data,
-          rentCycles: rentCycles.data.data,
-        });
+        setData(next);
       } catch (err) {
         if (requestId !== loadId.current) return;
-        // A 401 here means the session ended; App already signs the user out.
         if (err.response?.status !== 401) setError(errorMessage(err, 'Could not load your data.'));
       } finally {
         if (requestId === loadId.current) setLoading(false);
       }
     },
+    [fetchPropertyData]
+  );
+
+  const loadInitial = useCallback(async () => {
+    const requestId = (loadId.current += 1);
+    setLoading(true);
+    setError('');
+
+    try {
+      const propertyList = (await client.get('/properties')).data.data;
+      const activeId = propertyList[0]?._id || '';
+
+      if (requestId !== loadId.current) return;
+      setProperties(propertyList);
+      setPropertyId(activeId);
+
+      if (!activeId) {
+        setData(EMPTY);
+        return;
+      }
+
+      const next = await fetchPropertyData(activeId);
+      if (requestId !== loadId.current) return;
+      setData(next);
+    } catch (err) {
+      if (requestId !== loadId.current) return;
+      if (err.response?.status !== 401) setError(errorMessage(err, 'Could not load your data.'));
+    } finally {
+      if (requestId === loadId.current) setLoading(false);
+    }
+  }, [client, fetchPropertyData]);
+
+  const refreshRoomsAndBeds = useCallback(
+    async (activeId) => {
+      const [rooms, bedList] = await Promise.all([
+        client.get('/rooms', { params: { propertyId: activeId } }),
+        client.get('/beds', { params: { propertyId: activeId } }),
+      ]);
+      setData((current) => ({
+        ...current,
+        rooms: rooms.data.data,
+        beds: bedList.data.data,
+      }));
+    },
     [client]
   );
 
+  const initialLoadStarted = useRef(false);
   useEffect(() => {
-    load(propertyId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [load]);
+    if (initialLoadStarted.current) return;
+    initialLoadStarted.current = true;
+    loadInitial();
+  }, [loadInitial]);
 
   // Success messages are transient; leaving them up makes a stale one look
   // like confirmation of the action you just took.
@@ -94,8 +137,12 @@ export default function Dashboard({ client, user, onSignOut }) {
     try {
       const { data: created } = await client.post('/properties', { name });
       setNewPropertyName('');
+      setProperties((current) => [
+        created.data,
+        ...current.filter((property) => property._id !== created.data._id),
+      ]);
       setNotice(`${name} added.`);
-      await load(created.data._id);
+      await loadPropertyData(created.data._id);
     } catch (err) {
       setError(errorMessage(err, 'Could not add the property.'));
     } finally {
@@ -110,10 +157,10 @@ export default function Dashboard({ client, user, onSignOut }) {
 
     setError('');
     try {
-      await client.patch(`/properties/${_id}`, { name: name.trim(), address: address.trim(), city: city.trim() });
+      const { data: response } = await client.patch(`/properties/${_id}`, { name: name.trim(), address: address.trim(), city: city.trim() });
+      setProperties((current) => current.map((property) => property._id === _id ? response.data : property));
       setEditingProperty(null);
       setNotice('Property updated.');
-      await load(_id);
     } catch (err) {
       setError(errorMessage(err, 'Could not update the property.'));
     }
@@ -126,13 +173,18 @@ export default function Dashboard({ client, user, onSignOut }) {
     setPayingId(cycle._id);
     setError('');
     try {
-      await client.post(`/rent-cycles/${cycle._id}/payments`, {
+      const { data: response } = await client.post(`/rent-cycles/${cycle._id}/payments`, {
         amount: outstanding,
         method: 'UPI',
         date: new Date().toISOString(),
       });
+      setData((current) => ({
+        ...current,
+        rentCycles: current.rentCycles.map((item) => item._id === response.data._id
+          ? { ...response.data, tenantId: item.tenantId, propertyId: item.propertyId }
+          : item),
+      }));
       setNotice(`Recorded ${money(outstanding)} from ${cycle.tenantId?.name || 'tenant'}.`);
-      await load(propertyId);
     } catch (err) {
       setError(errorMessage(err, 'Could not record the payment.'));
     } finally {
@@ -140,9 +192,22 @@ export default function Dashboard({ client, user, onSignOut }) {
     }
   }
 
-  const occupancy = data.dashboard?.occupancy || {};
+  const totalBeds = data.beds.length;
+  const occupiedBeds = data.beds.filter((bed) => bed.status === 'OCCUPIED').length;
+  const occupancy = {
+    totalBeds,
+    occupiedBeds,
+    vacantBeds: totalBeds - occupiedBeds,
+    occupancyRate: totalBeds ? Math.round((occupiedBeds / totalBeds) * 100) : 0,
+  };
   const pending = data.rentCycles.filter((cycle) => cycle.status !== 'PAID');
   const pendingAmount = pending.reduce((sum, cycle) => sum + (cycle.amountDue - cycle.amountPaid), 0);
+  const now = new Date().toISOString();
+  const soon = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+  const vacatingSoon = data.tenants.filter(
+    (tenant) => tenant.status === 'ACTIVE' && tenant.expectedVacateDate >= now && tenant.expectedVacateDate <= soon
+  );
+  const vacantBeds = data.beds.filter((bed) => bed.status === 'VACANT');
   const activeProperty = properties.find((property) => property._id === propertyId);
 
   return (
@@ -158,7 +223,7 @@ export default function Dashboard({ client, user, onSignOut }) {
         {properties.length > 0 && (
           <label className="property-picker">
             <span className="sr-only">Property</span>
-            <select value={propertyId} onChange={(event) => load(event.target.value)}>
+            <select value={propertyId} onChange={(event) => loadPropertyData(event.target.value)}>
               {properties.map((property) => (
                 <option key={property._id} value={property._id}>
                   {property.name}
@@ -169,7 +234,7 @@ export default function Dashboard({ client, user, onSignOut }) {
         )}
 
         <div className="topbar-actions">
-          <Button variant="ghost" onClick={() => load(propertyId)} loading={loading} aria-label="Refresh">
+          <Button variant="ghost" onClick={() => loadPropertyData(propertyId)} loading={loading} aria-label="Refresh">
             <RefreshCcw size={16} />
             <span className="hide-sm">Refresh</span>
           </Button>
@@ -288,9 +353,9 @@ export default function Dashboard({ client, user, onSignOut }) {
               <Stat
                 icon={<Users size={18} />}
                 label="Vacating soon"
-                value={data.dashboard?.vacatingSoon?.length || 0}
+                value={vacatingSoon.length}
                 hint="Next 30 days"
-                tone={data.dashboard?.vacatingSoon?.length ? 'warn' : 'default'}
+                tone={vacatingSoon.length ? 'warn' : 'default'}
               />
               <Stat
                 icon={<IndianRupee size={18} />}
@@ -307,7 +372,7 @@ export default function Dashboard({ client, user, onSignOut }) {
               rooms={data.rooms}
               beds={data.beds}
               loading={loading}
-              onChanged={() => load(propertyId)}
+              onChanged={() => refreshRoomsAndBeds(propertyId)}
               onError={setError}
             />
 
@@ -395,9 +460,9 @@ export default function Dashboard({ client, user, onSignOut }) {
               </Card>
 
             <Card title="Vacant beds">
-              {data.dashboard?.vacantBeds?.length ? (
+              {vacantBeds.length ? (
                 <ul className="chip-list">
-                  {[...data.dashboard.vacantBeds]
+                  {[...vacantBeds]
                     .sort((a, b) =>
                       String(a.roomId?.roomNumber || '').localeCompare(String(b.roomId?.roomNumber || ''), undefined, { numeric: true }) ||
                       a.bedLabel.localeCompare(b.bedLabel, undefined, { numeric: true })
