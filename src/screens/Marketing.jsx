@@ -7,11 +7,11 @@ import '../marketing.css';
 
 const reducedMotion = () => typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
-/** Counts up once, on mount, unless the visitor asked for reduced motion. */
-function useCountUp(target, duration = 1100, delay = 350) {
+/** Counts up once when `run` turns true (on mount by default), unless the visitor asked for reduced motion. */
+function useCountUp(target, duration = 1100, delay = 350, run = true) {
   const [value, setValue] = useState(() => (reducedMotion() ? target : 0));
   useEffect(() => {
-    if (reducedMotion()) return undefined;
+    if (reducedMotion() || !run) return undefined;
     let frame;
     const start = performance.now() + delay;
     const tick = (now) => {
@@ -21,8 +21,43 @@ function useCountUp(target, duration = 1100, delay = 350) {
     };
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [target, duration, delay]);
+  }, [target, duration, delay, run]);
   return value;
+}
+
+/** True once the element has scrolled at least `threshold` into view; never turns back off. */
+function useInView(threshold = 0.4) {
+  const ref = useRef(null);
+  const [seen, setSeen] = useState(() => reducedMotion());
+  useEffect(() => {
+    if (seen || !ref.current) return undefined;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setSeen(true); observer.disconnect(); }
+    }, { threshold });
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [seen, threshold]);
+  return [ref, seen];
+}
+
+const TRIAL_DAYS = 30;
+
+/** The pricing card: "0 → 30" counts up and a day-strip fills as it scrolls into view. */
+function TrialCard() {
+  const [ref, inView] = useInView();
+  const days = useCountUp(TRIAL_DAYS, 1400, 150, inView);
+  return (
+    <div ref={ref} className={`lp-pricing-big${inView ? ' is-visible' : ''}`} role="img" aria-label={`${TRIAL_DAYS} days free, with Starter limits`}>
+      <span className="lp-ten-row" aria-hidden="true">
+        <span className="lp-ten">{days}</span>
+        <span className="lp-ten-unit">days</span>
+      </span>
+      <span className="lp-days" aria-hidden="true">
+        {Array.from({ length: TRIAL_DAYS }, (_, i) => <i key={i} className={i < days ? 'on' : undefined} />)}
+      </span>
+      <span className="lp-ten-label" aria-hidden="true">free, with Starter limits</span>
+    </div>
+  );
 }
 
 /* ───────────── The month story ───────────── */
@@ -291,10 +326,7 @@ export default function Marketing({ onStart, onSignIn, onDeleteAccount }) {
 
         <section className="lp-section" id="pricing" aria-labelledby="pricing-title">
           <div className="lp-container lp-pricing">
-            <div className="lp-pricing-big">
-              <span className="lp-ten">30</span>
-              <span className="lp-ten-label">days free, with Starter limits</span>
-            </div>
+            <TrialCard />
             <div className="lp-pricing-copy">
               <h2 id="pricing-title" className="lp-h2">Try it on your real PG first.</h2>
               <p>Create your account and run one property with up to 150 beds for 30 days. When you need more, or when the trial ends, subscribe here on the website. Payment is by UPI or card through Cashfree.</p>
