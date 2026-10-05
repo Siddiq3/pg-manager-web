@@ -1,0 +1,84 @@
+/* Sign in / create account / reset: a split screen with the bed board on the left. */
+
+.auth-split {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  background: #fff;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+.auth-mark {
+  display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 10px;
+  background: #e2511e; color: #fff; font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: .8rem;
+}
+
+/* ── left panel ── */
+.auth-aside {
+  position: sticky; top: 0; height: 100vh;
+  display: flex; flex-direction: column; padding: 32px 44px 40px;
+  background: #101014; color: #fff; overflow: hidden;
+}
+.auth-aside-brand { display: inline-flex; align-items: center; gap: 10px; font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: 1.2rem; letter-spacing: -0.03em; }
+.auth-aside-body { margin-top: auto; margin-bottom: auto; }
+.auth-aside-title { font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: clamp(2rem, 3.2vw, 2.8rem); line-height: 1.04; letter-spacing: -0.04em; max-width: 13ch; margin: 0 0 32px; color: #fff; }
+.auth-aside-board { background: #1c1c22; border-radius: 22px; padding: 14px; }
+.auth-aside-board .bb-room { background: #2a2a31; }
+.auth-aside-board .bb-room-no { color: rgba(255, 255, 255, .7); }
+.auth-aside-board .bb-vacant { background: transparent; border-color: rgba(255, 255, 255, .28); color: rgba(255, 255, 255, .5); }
+.auth-aside-note { margin: 16px 0 0; font-size: .85rem; color: rgba(255, 255, 255, .55); }
+
+/* ── form side ── */
+.auth-main { display: flex; flex-direction: column; padding: 24px 32px 48px; }
+.auth-top { display: flex; justify-content: space-between; align-items: center; min-height: 44px; }
+.auth-top-brand { display: none; align-items: center; gap: 10px; font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: 1.15rem; letter-spacing: -0.03em; }
+.auth-back { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 12px 0 6px; border: 0; border-radius: 12px; background: none; color: #45454f; font-weight: 600; }
+.auth-back:hover { background: #f4f4f6; color: #101014; }
+
+.auth-form { width: 100%; max-width: 420px; margin: auto; display: flex; flex-direction: column; gap: 18px; padding: 32px 0; }
+.auth-head h1 { margin: 0; font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: clamp(2.1rem, 3.6vw, 2.75rem); line-height: 1.05; letter-spacing: -0.04em; color: #101014; }
+.auth-head p { margin: 10px 0 4px; color: #5b5b66; font-size: 1rem; }
+
+.auth-tabs { display: flex; gap: 28px; border-bottom: 1.5px solid #e6e6ea; }
+.auth-tabs button { position: relative; padding: 10px 0 12px; border: 0; background: none; font-weight: 700; font-size: .98rem; color: #8a8a95; }
+.auth-tabs button[aria-selected='true'] { color: #101014; }
+.auth-tabs button[aria-selected='true']::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1.5px; height: 2.5px; border-radius: 2px; background: #e2511e; }
+
+.auth-method { display: inline-flex; align-self: flex-start; padding: 4px; gap: 4px; border-radius: 12px; background: #f4f4f6; }
+.auth-method button { min-height: 36px; padding: 0 14px; border: 0; border-radius: 9px; background: none; font-weight: 600; font-size: .9rem; color: #5b5b66; }
+.auth-method button[aria-checked='true'] { background: #fff; color: #101014; box-shadow: 0 1px 2px rgba(16, 16, 20, .06), 0 2px 8px rgba(16, 16, 20, .05); }
+
+.auth-inline { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end; }
+.auth-inline .btn { min-height: 52px; white-space: nowrap; }
+.auth-otp { letter-spacing: .5em; font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: 1.3rem; }
+
+.password-field { position: relative; }
+.password-toggle { position: absolute; right: 6px; top: 32px; width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 10px; background: none; color: #5b5b66; }
+.password-toggle:hover { background: rgba(16, 16, 20, .05); color: #101014; }
+.password-field input { padding-right: 52px; }
+
+.auth-link { border: 0; background: none; padding: 4px 0; color: #b83e15; font-weight: 700; font-size: .92rem; }
+.auth-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+.auth-link--right { align-self: flex-end; margin-top: -8px; }
+.auth-submit { min-height: 56px; font-size: 1.02rem; margin-top: 4px; }
+.auth-switch { margin: 0; text-align: center; color: #5b5b66; font-size: .92rem; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .auth-form { animation: auth-in 380ms cubic-bezier(.22, 1, .36, 1) both; }
+  @keyframes auth-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+}
+
+@media (max-width: 900px) {
+  .auth-split { grid-template-columns: 1fr; }
+  .auth-aside { display: none; }
+  .auth-top-brand { display: inline-flex; }
+  .auth-main { padding: 16px 20px 40px; }
+  .auth-form { margin: 8px auto 0; padding-top: 24px; }
+}
+
+/* ── other account screens (billing, verification, deletion) share this card ── */
+.auth-shell { min-height: 100vh; display: grid; place-items: center; padding: 32px 16px; background: #f4f4f6; }
+.auth-shell .auth-card { width: min(460px, 100%); padding: 36px; border: 1px solid #e6e6ea; border-radius: 28px; background: #fff; box-shadow: 0 1px 2px rgba(16, 16, 20, .04), 0 24px 56px -24px rgba(16, 16, 20, .2); display: flex; flex-direction: column; gap: 16px; }
+.auth-shell .auth-card h1 { font-family: 'Urbanist', sans-serif; letter-spacing: -0.035em; }
+.auth-shell .auth-brand .brand-mark { background: #e2511e; color: #fff; }
+@media (max-width: 640px) { .auth-shell .auth-card { padding: 24px 20px; border-radius: 22px; } }
