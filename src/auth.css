@@ -10,7 +10,7 @@
 
 .auth-mark {
   display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 10px;
-  background: #e2511e; color: #fff; font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: .8rem;
+  background: #9d00ff; color: #fff; font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: .8rem;
 }
 
 /* ── left panel ── */
@@ -42,7 +42,7 @@
 .auth-tabs { display: flex; gap: 28px; border-bottom: 1.5px solid #e6e6ea; }
 .auth-tabs button { position: relative; padding: 10px 0 12px; border: 0; background: none; font-weight: 700; font-size: .98rem; color: #8a8a95; }
 .auth-tabs button[aria-selected='true'] { color: #101014; }
-.auth-tabs button[aria-selected='true']::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1.5px; height: 2.5px; border-radius: 2px; background: #e2511e; }
+.auth-tabs button[aria-selected='true']::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1.5px; height: 2.5px; border-radius: 2px; background: #9d00ff; }
 
 .auth-method { display: inline-flex; align-self: flex-start; padding: 4px; gap: 4px; border-radius: 12px; background: #f4f4f6; }
 .auth-method button { min-height: 36px; padding: 0 14px; border: 0; border-radius: 9px; background: none; font-weight: 600; font-size: .9rem; color: #5b5b66; }
@@ -57,7 +57,7 @@
 .password-toggle:hover { background: rgba(16, 16, 20, .05); color: #101014; }
 .password-field input { padding-right: 52px; }
 
-.auth-link { border: 0; background: none; padding: 4px 0; color: #b83e15; font-weight: 700; font-size: .92rem; }
+.auth-link { border: 0; background: none; padding: 4px 0; color: #7e00cc; font-weight: 700; font-size: .92rem; }
 .auth-link:hover { text-decoration: underline; text-underline-offset: 3px; }
 .auth-link--right { align-self: flex-end; margin-top: -8px; }
 .auth-submit { min-height: 56px; font-size: 1.02rem; margin-top: 4px; }
@@ -80,7 +80,7 @@
 .auth-shell { min-height: 100vh; display: grid; place-items: center; padding: 32px 16px; background: #f4f4f6; }
 .auth-shell .auth-card { width: min(460px, 100%); padding: 36px; border: 1px solid #e6e6ea; border-radius: 28px; background: #fff; box-shadow: 0 1px 2px rgba(16, 16, 20, .04), 0 24px 56px -24px rgba(16, 16, 20, .2); display: flex; flex-direction: column; gap: 16px; }
 .auth-shell .auth-card h1 { font-family: 'Urbanist', sans-serif; letter-spacing: -0.035em; }
-.auth-shell .auth-brand .brand-mark { background: #e2511e; color: #fff; }
+.auth-shell .auth-brand .brand-mark { background: #9d00ff; color: #fff; }
 @media (max-width: 640px) { .auth-shell .auth-card { padding: 24px 20px; border-radius: 22px; } }
 
 /* ── plan picker (billing) ── */
@@ -88,9 +88,9 @@
 .plan-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .plan-option { display: flex; flex-direction: column; gap: 8px; text-align: left; padding: 18px; border: 1.5px solid #e6e6ea; border-radius: 18px; background: #fff; cursor: pointer; font: inherit; color: #101014; transition: border-color 160ms ease, box-shadow 160ms ease; }
 .plan-option:hover { border-color: #d3d3d9; }
-.plan-option.is-selected { border-color: #e2511e; box-shadow: 0 0 0 3px rgba(226, 81, 30, .15); }
+.plan-option.is-selected { border-color: #9d00ff; box-shadow: 0 0 0 3px rgba(157, 0, 255, .15); }
 .plan-name { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: 1.15rem; }
-.plan-tag { font-style: normal; font-family: 'Plus Jakarta Sans', sans-serif; font-size: .7rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: #fef1ea; color: #b83e15; }
+.plan-tag { font-style: normal; font-family: 'Plus Jakarta Sans', sans-serif; font-size: .7rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: #faf0ff; color: #7e00cc; }
 .plan-price { font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: 1.8rem; letter-spacing: -0.03em; }
 .plan-price small { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; font-size: .85rem; color: #5b5b66; letter-spacing: 0; margin-left: 2px; }
 .plan-option ul { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 6px; font-size: .88rem; color: #45454f; }
