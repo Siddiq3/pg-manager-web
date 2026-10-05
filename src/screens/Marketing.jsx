@@ -48,11 +48,14 @@ function TrialCard() {
   const days = useCountUp(TRIAL_DAYS, 1400, 150, inView);
   return (
     <div ref={ref} className={`lp-pricing-big${inView ? ' is-visible' : ''}`} role="img" aria-label={`${TRIAL_DAYS} days free, with Starter limits`}>
-      <span className="lp-ten" aria-hidden="true">{days}</span>
+      <span className="lp-ten-row" aria-hidden="true">
+        <span className="lp-ten">{days}</span>
+        <span className="lp-ten-unit">days</span>
+      </span>
       <span className="lp-days" aria-hidden="true">
         {Array.from({ length: TRIAL_DAYS }, (_, i) => <i key={i} className={i < days ? 'on' : undefined} />)}
       </span>
-      <span className="lp-ten-label" aria-hidden="true">days free, with Starter limits</span>
+      <span className="lp-ten-label" aria-hidden="true">free, with Starter limits</span>
     </div>
   );
 }

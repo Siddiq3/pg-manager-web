@@ -213,7 +213,9 @@
 .lp-pricing { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 64px; align-items: center; }
 .lp-pricing-big { background: var(--orange); color: #fff; border-radius: 32px; padding: 40px; aspect-ratio: 1 / .82; display: flex; flex-direction: column; justify-content: space-between; }
 .lp-ten { font-family: var(--display); font-weight: 700; font-size: clamp(8rem, 17vw, 14rem); line-height: .8; letter-spacing: -0.07em; font-variant-numeric: tabular-nums; }
-.lp-ten-label { font-family: var(--display); font-weight: 600; font-size: 1.5rem; letter-spacing: -0.02em; max-width: 14ch; line-height: 1.15; }
+.lp-ten-row { display: flex; align-items: baseline; gap: 14px; }
+.lp-ten-unit { font-family: var(--display); font-weight: 700; font-size: clamp(2.2rem, 4.4vw, 3.6rem); letter-spacing: -0.04em; line-height: 1; }
+.lp-ten-label { font-family: var(--display); font-weight: 600; font-size: 1.5rem; letter-spacing: -0.02em; max-width: 24ch; line-height: 1.15; text-wrap: balance; }
 .lp-pricing-copy p { margin-top: 18px; color: var(--ink-2); max-width: 46ch; }
 .lp-checks { margin: 26px 0 32px; display: grid; gap: 12px; }
 .lp-checks li { display: flex; gap: 12px; align-items: center; font-weight: 600; }
@@ -313,4 +315,7 @@
   @keyframes lp-day-pop { 40% { transform: scaleY(1.6); } }
   .lp-ten-label { opacity: 0; transform: translateY(10px); transition: opacity 500ms ease 1.35s, transform 600ms cubic-bezier(.22, 1, .36, 1) 1.35s; }
   .lp-pricing-big.is-visible .lp-ten-label { opacity: 1; transform: none; }
+  /* "days" slides in beside the number as the count gets going. */
+  .lp-ten-unit { opacity: 0; transform: translateX(-12px); transition: opacity 400ms ease 300ms, transform 500ms cubic-bezier(.22, 1, .36, 1) 300ms; }
+  .lp-pricing-big.is-visible .lp-ten-unit { opacity: 1; transform: none; }
 }
