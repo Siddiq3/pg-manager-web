@@ -1,5 +1,5 @@
-import React from 'react';
-import { AlertCircle, CheckCircle2, Inbox } from 'lucide-react';
+import React, { useState } from 'react';
+import { AlertCircle, CheckCircle2, Eye, EyeOff, Inbox } from 'lucide-react';
 
 export function Card({ title, action, children, className = '' }) {
   return (
@@ -79,6 +79,19 @@ export function Field({ label, hint, error, ...inputProps }) {
       <label htmlFor={id}>{label}</label>
       <input id={id} aria-describedby={error || hint ? `${id}-help` : undefined} aria-invalid={error ? 'true' : undefined} {...inputProps} />
       {error ? <span id={`${id}-help`} className="field-error">{error}</span> : hint ? <span id={`${id}-help`} className="field-hint">{hint}</span> : null}
+    </div>
+  );
+}
+
+/** A password Field with a show/hide toggle inside the box. */
+export function PasswordField(props) {
+  const [visible, setVisible] = useState(false);
+  return (
+    <div className="password-field">
+      <Field {...props} type={visible ? 'text' : 'password'} />
+      <button type="button" className="password-toggle" onClick={() => setVisible((v) => !v)} aria-label={visible ? 'Hide password' : 'Show password'} aria-pressed={visible}>
+        {visible ? <EyeOff size={18} /> : <Eye size={18} />}
+      </button>
     </div>
   );
 }
