@@ -119,7 +119,7 @@ export default function LoginScreen({ onSignedIn, initialMode = 'login', onHome 
 
   const heading = {
     login: ['Welcome back', 'Sign in to see your rooms, tenants and rent.'],
-    register: ['Start your free trial', '10 days with every feature. No card needed.'],
+    register: ['Start your free trial', '30 days free with Starter limits. No card needed.'],
     forgot: ['Reset your password', 'We’ll email you a 6-digit code to set a new one.'],
   }[mode];
 

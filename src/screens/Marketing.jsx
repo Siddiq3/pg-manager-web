@@ -163,16 +163,22 @@ function MonthStory() {
 /* ───────────── Page ───────────── */
 
 const EXTRAS = [
-  { icon: Building2, title: 'More than one building', body: 'Add every property you run and switch between them from the dashboard.' },
-  { icon: Users, title: 'Bring in a co-owner', body: 'Invite a partner or family member by email to manage the same property.' },
+  { icon: Building2, title: 'More than one building', body: 'Run up to 3 properties on Pro, or 10 on Growth, and switch between them from the dashboard.' },
+  { icon: Users, title: 'Bring in a co-owner', body: 'Give a partner or manager their own sign-in for your property. Included with Pro and Growth.' },
   { icon: Wallet, title: 'Deposits on record', body: 'Note who has paid a deposit and whose deposit you have refunded.' },
   { icon: Smartphone, title: 'Phone and laptop', body: 'The Android app and this website show the same rooms, tenants and rent.' },
   { icon: LockKeyhole, title: 'Sign in your way', body: 'Use your password, or have a one-time code sent to your email.' },
   { icon: MessageCircle, title: 'Reach tenants fast', body: 'Call or open WhatsApp with a tenant from their rent entry.' },
 ];
 
+const PLANS = [
+  { name: 'Starter', price: 299, lines: ['1 property', '150 beds', 'No co-owners', 'Standard support'] },
+  { name: 'Pro', price: 699, featured: true, lines: ['Up to 3 properties', '450 beds', 'Up to 2 co-owners', 'Standard support'] },
+  { name: 'Growth', price: 999, lines: ['Up to 10 properties', '1,000 beds', 'Up to 4 co-owners', 'Priority support'] },
+];
+
 const FAQS = [
-  ['Do I need a card to start the free trial?', 'No. The 10-day trial starts when you create your account. You only subscribe, on this website, if you want to keep going after it ends.'],
+  ['Do I need a card to start the free trial?', 'No. The 30-day trial starts when you create your account and has Starter limits: 1 property, up to 150 beds, no co-owners. Subscribe on this website for more, or when the trial ends.'],
   ['How do I pay for a subscription?', 'Checkout runs through Cashfree with UPI or card. PG Manager never sees or stores your card details, UPI PIN or bank login.'],
   ['Can I manage more than one PG?', 'Yes. Add each property separately and switch between them. Each one has its own rooms, tenants and rent.'],
   ['What happens to my data if I leave?', 'You can delete your account from the app or this website at any time. It removes your properties, rooms, tenants and rent records.'],
@@ -226,7 +232,7 @@ export default function Marketing({ onStart, onSignIn, onDeleteAccount }) {
               <h1 className="lp-h1">Run your PG without the register.</h1>
               <p className="lp-hero-sub">See which beds are free, who is moving out and whose rent is still due. One place for your rooms, tenants and rent, on your phone and your laptop.</p>
               <div className="lp-hero-ctas">
-                <button type="button" className="lp-btn lp-btn--primary lp-btn--lg" onClick={onStart}>Start your 10-day free trial</button>
+                <button type="button" className="lp-btn lp-btn--primary lp-btn--lg" onClick={onStart}>Start your 30-day free trial</button>
                 <a href="#how-it-works" className="lp-btn lp-btn--ghost lp-btn--lg">See how it works</a>
               </div>
               <p className="lp-hero-note">No card needed to start. Made for PG and hostel owners in India.</p>
@@ -286,12 +292,12 @@ export default function Marketing({ onStart, onSignIn, onDeleteAccount }) {
         <section className="lp-section" id="pricing" aria-labelledby="pricing-title">
           <div className="lp-container lp-pricing">
             <div className="lp-pricing-big">
-              <span className="lp-ten">10</span>
-              <span className="lp-ten-label">days free, every feature included</span>
+              <span className="lp-ten">30</span>
+              <span className="lp-ten-label">days free, with Starter limits</span>
             </div>
             <div className="lp-pricing-copy">
               <h2 id="pricing-title" className="lp-h2">Try it on your real PG first.</h2>
-              <p>Create your account and use everything for 10 days. If it works for you, subscribe here on the website. Payment is by UPI or card through Cashfree.</p>
+              <p>Create your account and run one property with up to 150 beds for 30 days. When you need more, or when the trial ends, subscribe here on the website. Payment is by UPI or card through Cashfree.</p>
               <ul className="lp-checks">
                 <li><Check size={18} />No card needed to start</li>
                 <li><Check size={18} />Rooms, tenants and rent tracking all included</li>
@@ -299,6 +305,17 @@ export default function Marketing({ onStart, onSignIn, onDeleteAccount }) {
               </ul>
               <button type="button" className="lp-btn lp-btn--primary lp-btn--lg" onClick={onStart}>Create your account</button>
             </div>
+          </div>
+          <div className="lp-container">
+            <ul className="lp-plans" aria-label="Plans">
+              {PLANS.map((plan) => (
+                <li key={plan.name} className={plan.featured ? 'is-featured' : undefined}>
+                  <h3>{plan.name}</h3>
+                  <p className="lp-plan-price">₹{plan.price}<span>/month</span></p>
+                  <ul>{plan.lines.map((line) => <li key={line}><Check size={16} />{line}</li>)}</ul>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
