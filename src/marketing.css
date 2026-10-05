@@ -212,7 +212,7 @@
 
 .lp-pricing { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 64px; align-items: center; }
 .lp-pricing-big { background: var(--orange); color: #fff; border-radius: 32px; padding: 40px; aspect-ratio: 1 / .82; display: flex; flex-direction: column; justify-content: space-between; }
-.lp-ten { font-family: var(--display); font-weight: 700; font-size: clamp(8rem, 17vw, 14rem); line-height: .8; letter-spacing: -0.07em; }
+.lp-ten { font-family: var(--display); font-weight: 700; font-size: clamp(8rem, 17vw, 14rem); line-height: .8; letter-spacing: -0.07em; font-variant-numeric: tabular-nums; }
 .lp-ten-label { font-family: var(--display); font-weight: 600; font-size: 1.5rem; letter-spacing: -0.02em; max-width: 14ch; line-height: 1.15; }
 .lp-pricing-copy p { margin-top: 18px; color: var(--ink-2); max-width: 46ch; }
 .lp-checks { margin: 26px 0 32px; display: grid; gap: 12px; }
@@ -299,3 +299,18 @@
 .lp-plans ul li { display: flex; gap: 10px; align-items: center; color: var(--ink-2); }
 .lp-plans ul svg { color: var(--leaf); flex-shrink: 0; }
 @media (max-width: 960px) { .lp-plans { grid-template-columns: 1fr; } }
+
+/* ── 30-day trial card: counts 0 → 30 as it scrolls into view ── */
+.lp-days { display: grid; grid-template-columns: repeat(15, 1fr); gap: 6px; margin: 28px 0 22px; max-width: 360px; }
+.lp-days i { display: block; height: 10px; border-radius: 3px; background: rgba(255, 255, 255, .22); }
+.lp-days i.on { background: #fff; }
+@media (prefers-reduced-motion: no-preference) {
+  .lp-pricing-big { opacity: 0; transform: translateY(24px) scale(.97); transition: opacity 500ms ease, transform 700ms cubic-bezier(.22, 1, .36, 1); }
+  .lp-pricing-big.is-visible { opacity: 1; transform: none; }
+  .lp-days i { transition: background-color 180ms ease; }
+  /* Each day pops as it lights, then settles back into the grid. */
+  .lp-days i.on { animation: lp-day-pop 320ms cubic-bezier(.22, 1, .36, 1); }
+  @keyframes lp-day-pop { 40% { transform: scaleY(1.6); } }
+  .lp-ten-label { opacity: 0; transform: translateY(10px); transition: opacity 500ms ease 1.35s, transform 600ms cubic-bezier(.22, 1, .36, 1) 1.35s; }
+  .lp-pricing-big.is-visible .lp-ten-label { opacity: 1; transform: none; }
+}
