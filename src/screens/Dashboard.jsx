@@ -7,7 +7,7 @@ import RoomsManager from './RoomsManager';
 
 const EMPTY = { rooms: [], beds: [], tenants: [], rentCycles: [] };
 
-export default function Dashboard({ client, user, onSignOut }) {
+export default function Dashboard({ client, user, entitlement, onPlans, onSignOut }) {
   const [properties, setProperties] = useState([]);
   const [propertyId, setPropertyId] = useState('');
   const [data, setData] = useState(EMPTY);
@@ -238,6 +238,12 @@ export default function Dashboard({ client, user, onSignOut }) {
             <RefreshCcw size={16} />
             <span className="hide-sm">Refresh</span>
           </Button>
+          {entitlement?.status === 'TRIAL' && (
+            <Button variant="secondary" onClick={onPlans}>
+              Plans
+              <span className="hide-sm">· {entitlement.daysRemaining} day{entitlement.daysRemaining === 1 ? '' : 's'} of trial left</span>
+            </Button>
+          )}
           <span className="avatar" title={user?.email}>
             {initials(user?.name)}
           </span>

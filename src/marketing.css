@@ -288,3 +288,14 @@
   .lp-final-row { flex-direction: column; align-items: flex-start; }
   .lp-final .lp-btn { width: 100%; }
 }
+
+/* ── plans ── */
+.lp-plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 56px; }
+.lp-plans > li { background: #fff; border: 1px solid var(--line); border-radius: 24px; padding: 28px; }
+.lp-plans > li.is-featured { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(226, 81, 30, .12); }
+.lp-plan-price { color: var(--ink); font-family: var(--display); font-weight: 700; font-size: 2.6rem; letter-spacing: -0.04em; margin-top: 8px; }
+.lp-plan-price span { font-family: var(--body); font-weight: 500; font-size: 1rem; color: var(--ink-3); letter-spacing: 0; margin-left: 4px; }
+.lp-plans ul { margin-top: 18px; display: grid; gap: 10px; }
+.lp-plans ul li { display: flex; gap: 10px; align-items: center; color: var(--ink-2); }
+.lp-plans ul svg { color: var(--leaf); flex-shrink: 0; }
+@media (max-width: 960px) { .lp-plans { grid-template-columns: 1fr; } }

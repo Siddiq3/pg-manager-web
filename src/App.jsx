@@ -19,6 +19,7 @@ function AppExperience({ deletionMode = false, onExitDeletion, authMode = 'login
   const [entitlementState, setEntitlementState] = useState('idle');
   const [entitlementError, setEntitlementError] = useState('');
   const [localDeletion, setLocalDeletion] = useState(false);
+  const [showPlans, setShowPlans] = useState(() => typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('billing') === 'return');
 
   const applySession = useCallback((data) => {
     accessToken.current = data.accessToken;
@@ -79,9 +80,21 @@ function AppExperience({ deletionMode = false, onExitDeletion, authMode = 'login
   if (deletionMode || localDeletion) return <DeleteAccountScreen client={client} onDeleted={() => { endSession(); onExitDeletion?.(); }} onBack={() => localDeletion ? setLocalDeletion(false) : onExitDeletion?.()} />;
   if (entitlementState === 'idle' || entitlementState === 'loading') return <main className="auth-shell"><span className="spinner spinner-lg" aria-label="Loading subscription" /></main>;
   if (entitlementState === 'error') return <BillingStatusErrorScreen message={entitlementError} onRetry={loadEntitlement} onSignOut={signOut} onDelete={() => setLocalDeletion(true)} />;
-  if (!entitlement.hasAccess) return <BillingScreen client={client} entitlement={entitlement} onActive={(next) => { setEntitlement(next); setEntitlementState('ready'); }} onSignOut={signOut} />;
+  // Plans open when access has ended, when a trial user chooses to upgrade, or on the
+  // return from Cashfree checkout (so the new subscription is synced and confirmed).
+  if (!entitlement.hasAccess || showPlans) {
+    return (
+      <BillingScreen
+        client={client}
+        entitlement={entitlement}
+        onActive={(next) => { setEntitlement(next); setEntitlementState('ready'); setShowPlans(false); }}
+        onBack={entitlement.hasAccess ? () => setShowPlans(false) : undefined}
+        onSignOut={signOut}
+      />
+    );
+  }
 
-  return <Dashboard client={client} user={user} onSignOut={signOut} />;
+  return <Dashboard client={client} user={user} entitlement={entitlement} onPlans={() => setShowPlans(true)} onSignOut={signOut} />;
 }
 
 export default function App() {
