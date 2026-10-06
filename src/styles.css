@@ -1,13 +1,13 @@
 /* ---------- tokens ---------- */
 :root {
-  /* PG Manager: the StoreKit look — warm neutrals, one orange accent, soft corners. */
-  --primary-tint: #fde3d3;
-  --primary-text: #b83e15;
+  /* PG Manager: the StoreKit look — warm neutrals, one purple accent, soft corners. */
+  --primary-tint: #efd9ff;
+  --primary-text: #7e00cc;
   --shadow-lift: 0 8px 24px rgba(16, 16, 20, .1), 0 2px 6px rgba(16, 16, 20, .05);
   --font-display: 'Urbanist', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
-  --primary: #e2511e;
-  --primary-pressed: #b83e15;
-  --primary-subtle: #fef1ea;
+  --primary: #9d00ff;
+  --primary-pressed: #7e00cc;
+  --primary-subtle: #faf0ff;
   --secondary: #45454f;
   --background: #f4f4f6;
   --surface: #ffffff;
@@ -61,7 +61,7 @@
   --r-lg: 24px;
   --shadow-sm: 0 1px 2px rgba(16, 16, 20, .04), 0 4px 12px rgba(16, 16, 20, .04);
   --shadow: 0 1px 2px rgba(16, 16, 20, .04), 0 12px 32px rgba(16, 16, 20, .06);
-  --ring: 0 0 0 3px rgba(226, 81, 30, .2);
+  --ring: 0 0 0 3px rgba(157, 0, 255, .2);
   --fast: 160ms ease;
   color: var(--text);
   background: var(--bg);
