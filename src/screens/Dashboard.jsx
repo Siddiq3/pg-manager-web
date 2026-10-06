@@ -480,7 +480,9 @@ export default function Dashboard({ client, user, entitlement, onPlans, onSignOu
                     ))}
                 </ul>
               ) : (
-                <EmptyState icon={<BedDouble size={22} />} title="Every bed is occupied" hint="Nice - full house." />
+                totalBeds
+                  ? <EmptyState icon={<BedDouble size={22} />} title="Every bed is occupied" hint="Nice - full house." />
+                  : <EmptyState icon={<BedDouble size={22} />} title="No beds yet" hint="Add a room, then give it beds." />
               )}
             </Card>
             </div>

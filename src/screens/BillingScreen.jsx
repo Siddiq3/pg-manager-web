@@ -57,7 +57,24 @@ export default function BillingScreen({ client, entitlement, onActive, onBack, o
   }
 
   const onTrial = status?.status === 'TRIAL';
+  const active = status?.status === 'ACTIVE';
+  // ponytail: no upgrade or downgrade flow yet, so an active subscriber only sees their plan.
+  const current = active ? PLANS.find((p) => p.id === status.plan) : null;
   const chosen = PLANS.find((p) => p.id === plan);
+  const tag = (p) => (current?.id === p.id ? 'Your plan' : onTrial && p.id === 'STARTER' ? 'Your trial' : null);
+
+  let title = 'Subscription required';
+  let subtitle = 'Your free trial has ended. Choose a plan to keep using PG Manager. Your data is safe.';
+  if (current) {
+    title = `You're on ${current.name}`;
+    subtitle = `Your subscription is active at ₹${current.price}/month.`;
+  } else if (onTrial) {
+    title = 'Choose a plan';
+    subtitle = `${status.daysRemaining} day${status.daysRemaining === 1 ? '' : 's'} left in your 30-day free trial. The trial has Starter limits; choose a plan for more, or keep using the trial until it ends.`;
+  } else if (status?.status === 'CO_OWNER') {
+    title = 'Choose a plan';
+    subtitle = "You use PG Manager as a co-owner through the owner's plan. Subscribe only if you also want to run a PG of your own.";
+  }
 
   return (
     <main className="auth-shell">
@@ -66,17 +83,14 @@ export default function BillingScreen({ client, entitlement, onActive, onBack, o
           <span className="brand-mark"><Building2 size={20} /></span>
           <div><strong>PG Manager</strong><p>Plan & billing</p></div>
         </div>
-        <h1>{onTrial ? 'Choose a plan' : 'Subscription required'}</h1>
-        <p className="auth-subtitle">
-          {onTrial
-            ? `${status.daysRemaining} day${status.daysRemaining === 1 ? '' : 's'} left in your 30-day free trial. The trial has Starter limits; choose a plan for more, or keep using the trial until it ends.`
-            : 'Your free trial has ended. Choose a plan to keep using PG Manager. Your data is safe.'}
-        </p>
+        <h1>{title}</h1>
+        <p className="auth-subtitle">{subtitle}</p>
+        {status?.hasAccess && <p className="auth-subtitle">Manage your rooms, tenants and rent in the PG Manager Android app, signed in with this account.</p>}
 
         <div className="plan-grid" role="radiogroup" aria-label="Plan">
           {PLANS.map((p) => (
-            <button key={p.id} type="button" role="radio" aria-checked={plan === p.id} className={`plan-option${plan === p.id ? ' is-selected' : ''}`} onClick={() => setPlan(p.id)}>
-              <span className="plan-name">{p.name}{onTrial && p.id === 'STARTER' && <em className="plan-tag">Your trial</em>}</span>
+            <button key={p.id} type="button" role="radio" aria-checked={current ? current.id === p.id : plan === p.id} disabled={!!current} className={`plan-option${(current ? current.id === p.id : plan === p.id) ? ' is-selected' : ''}`} onClick={() => setPlan(p.id)}>
+              <span className="plan-name">{p.name}{tag(p) && <em className="plan-tag">{tag(p)}</em>}</span>
               <span className="plan-price">₹{p.price}<small>/month</small></span>
               <ul>{p.lines.map((line) => <li key={line}><Check size={14} />{line}</li>)}</ul>
             </button>
@@ -84,11 +98,13 @@ export default function BillingScreen({ client, entitlement, onActive, onBack, o
         </div>
 
         <Banner>{error}</Banner>
-        <div className="billing-security">
-          <ShieldCheck size={20} />
-          <span>Checkout is handled by Cashfree with UPI or card. PG Manager never receives or stores your card, UPI PIN or bank credentials.</span>
-        </div>
-        <Button onClick={subscribe} loading={busy}>Subscribe to {chosen.name} · ₹{chosen.price}/month</Button>
+        {!current && <>
+          <div className="billing-security">
+            <ShieldCheck size={20} />
+            <span>Checkout is handled by Cashfree with UPI or card. PG Manager never receives or stores your card, UPI PIN or bank credentials.</span>
+          </div>
+          <Button onClick={subscribe} loading={busy}>Subscribe to {chosen.name} · ₹{chosen.price}/month</Button>
+        </>}
         {onBack
           ? <Button variant="ghost" onClick={onBack}><ArrowLeft size={16} />Back to my PG</Button>
           : <Button variant="ghost" onClick={onSignOut}>Sign out</Button>}
