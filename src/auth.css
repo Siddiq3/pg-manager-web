@@ -88,6 +88,7 @@
 .plan-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .plan-option { display: flex; flex-direction: column; gap: 8px; text-align: left; padding: 18px; border: 1.5px solid #e6e6ea; border-radius: 18px; background: #fff; cursor: pointer; font: inherit; color: #101014; transition: border-color 160ms ease, box-shadow 160ms ease; }
 .plan-option:hover { border-color: #d3d3d9; }
+.plan-option:disabled { cursor: default; }
 .plan-option.is-selected { border-color: #9d00ff; box-shadow: 0 0 0 3px rgba(157, 0, 255, .15); }
 .plan-name { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: 1.15rem; }
 .plan-tag { font-style: normal; font-family: 'Plus Jakarta Sans', sans-serif; font-size: .7rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: #faf0ff; color: #7e00cc; }

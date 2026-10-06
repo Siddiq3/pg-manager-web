@@ -198,10 +198,10 @@ function MonthStory() {
 /* ───────────── Page ───────────── */
 
 const EXTRAS = [
-  { icon: Building2, title: 'More than one building', body: 'Run up to 3 properties on Pro, or 10 on Growth, and switch between them from the dashboard.' },
+  { icon: Building2, title: 'More than one building', body: 'Run up to 3 properties on Pro, or 10 on Growth, and switch between them in the app.' },
   { icon: Users, title: 'Bring in a co-owner', body: 'Give a partner or manager their own sign-in for your property. Included with Pro and Growth.' },
   { icon: Wallet, title: 'Deposits on record', body: 'Note who has paid a deposit and whose deposit you have refunded.' },
-  { icon: Smartphone, title: 'Phone and laptop', body: 'The Android app and this website show the same rooms, tenants and rent.' },
+  { icon: Smartphone, title: 'Runs on your phone', body: 'Manage rooms, tenants and rent in the Android app. Use this website for your account and subscription.' },
   { icon: LockKeyhole, title: 'Sign in your way', body: 'Use your password, or have a one-time code sent to your email.' },
   { icon: MessageCircle, title: 'Reach tenants fast', body: 'Call or open WhatsApp with a tenant from their rent entry.' },
 ];
@@ -217,7 +217,7 @@ const FAQS = [
   ['How do I pay for a subscription?', 'Checkout runs through Cashfree with UPI or card. PG Manager never sees or stores your card details, UPI PIN or bank login.'],
   ['Can I manage more than one PG?', 'Yes. Add each property separately and switch between them. Each one has its own rooms, tenants and rent.'],
   ['What happens to my data if I leave?', 'You can delete your account from the app or this website at any time. It removes your properties, rooms, tenants and rent records.'],
-  ['Does my co-owner need their own account?', 'Yes. Invite them from property settings with their email address, and they sign in with their own account using that email.'],
+  ['Does my co-owner need their own account?', 'Yes. In the app, open property settings and create a sign-in for them with their email and a password you share. If that email already has an account, they are invited instead.'],
 ];
 
 export default function Marketing({ onStart, onSignIn, onDeleteAccount }) {
@@ -265,7 +265,7 @@ export default function Marketing({ onStart, onSignIn, onDeleteAccount }) {
           <div className="lp-container lp-hero-grid">
             <div className="lp-hero-copy">
               <h1 className="lp-h1">Run your PG without the register.</h1>
-              <p className="lp-hero-sub">See which beds are free, who is moving out and whose rent is still due. One place for your rooms, tenants and rent, on your phone and your laptop.</p>
+              <p className="lp-hero-sub">See which beds are free, who is moving out and whose rent is still due. One place for your rooms, tenants and rent, in the app on your phone.</p>
               <div className="lp-hero-ctas">
                 <button type="button" className="lp-btn lp-btn--primary lp-btn--lg" onClick={onStart}>Start your 30-day free trial</button>
                 <a href="#how-it-works" className="lp-btn lp-btn--ghost lp-btn--lg">See how it works</a>

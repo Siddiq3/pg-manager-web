@@ -1,11 +1,15 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { authPost, createApiClient } from './lib/api';
-import Dashboard from './screens/Dashboard';
 import LoginScreen from './screens/LoginScreen';
 import Marketing from './screens/Marketing';
 import BillingScreen from './screens/BillingScreen';
 import DeleteAccountScreen from './screens/DeleteAccountScreen';
 import BillingStatusErrorScreen from './screens/BillingStatusErrorScreen';
+
+// For now the website covers sign-up, sign-in and billing; managing a PG is app-only.
+// The dashboard is kept for later: set VITE_WEB_DASHBOARD=true to turn it back on.
+const WEB_DASHBOARD = import.meta.env.VITE_WEB_DASHBOARD === 'true';
+const Dashboard = lazy(() => import('./screens/Dashboard'));
 
 function AppExperience({ deletionMode = false, onExitDeletion, authMode = 'login', onHome }) {
   // The access token lives in a ref so the API client stays stable: rebuilding
@@ -82,19 +86,23 @@ function AppExperience({ deletionMode = false, onExitDeletion, authMode = 'login
   if (entitlementState === 'error') return <BillingStatusErrorScreen message={entitlementError} onRetry={loadEntitlement} onSignOut={signOut} onDelete={() => setLocalDeletion(true)} />;
   // Plans open when access has ended, when a trial user chooses to upgrade, or on the
   // return from Cashfree checkout (so the new subscription is synced and confirmed).
-  if (!entitlement.hasAccess || showPlans) {
+  if (!WEB_DASHBOARD || !entitlement.hasAccess || showPlans) {
     return (
       <BillingScreen
         client={client}
         entitlement={entitlement}
         onActive={(next) => { setEntitlement(next); setEntitlementState('ready'); setShowPlans(false); }}
-        onBack={entitlement.hasAccess ? () => setShowPlans(false) : undefined}
+        onBack={WEB_DASHBOARD && entitlement.hasAccess ? () => setShowPlans(false) : undefined}
         onSignOut={signOut}
       />
     );
   }
 
-  return <Dashboard client={client} user={user} entitlement={entitlement} onPlans={() => setShowPlans(true)} onSignOut={signOut} />;
+  return (
+    <Suspense fallback={<main className="auth-shell"><span className="spinner spinner-lg" aria-label="Loading" /></main>}>
+      <Dashboard client={client} user={user} entitlement={entitlement} onPlans={() => setShowPlans(true)} onSignOut={signOut} />
+    </Suspense>
+  );
 }
 
 export default function App() {
