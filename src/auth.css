@@ -51,6 +51,7 @@
 .auth-inline { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end; }
 .auth-inline .btn { min-height: 52px; white-space: nowrap; }
 .auth-otp { letter-spacing: .5em; font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: 1.3rem; }
+.auth-otp::placeholder { letter-spacing: normal; font-family: inherit; font-weight: 400; font-size: 1rem; }
 
 .password-field { position: relative; }
 .password-toggle { position: absolute; right: 6px; top: 32px; width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 10px; background: none; color: #5b5b66; }

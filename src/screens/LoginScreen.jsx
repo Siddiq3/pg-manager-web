@@ -157,11 +157,11 @@ export default function LoginScreen({ onSignedIn, initialMode = 'login', onHome 
 
           {mode === 'register' && (
             <>
-              <Field label="Your name" name="name" value={form.name} onChange={update('name')} autoComplete="name" placeholder="Ravi Kumar" required />
-              <Field label="Email" name="email" type="email" value={form.email} onChange={update('email')} autoComplete="email" placeholder="you@example.com" required />
-              <Field label="Mobile number" name="phone" value={form.phone} onChange={update('phone')} autoComplete="tel" inputMode="tel" placeholder="9876543210" required />
-              <PasswordField label="Password" name="password" value={form.password} onChange={update('password')} autoComplete="new-password" hint="8+ characters with an uppercase letter, a number and a symbol." required />
-              <PasswordField label="Confirm password" name="confirmPassword" value={form.confirmPassword} onChange={update('confirmPassword')} autoComplete="new-password" required />
+              <Field label="Your name" placeholder="Enter your full name" name="name" value={form.name} onChange={update('name')} autoComplete="name" required />
+              <Field label="Email" placeholder="Enter your email" name="email" type="email" value={form.email} onChange={update('email')} autoComplete="email" required />
+              <Field label="Mobile number" placeholder="Enter your mobile number" name="phone" value={form.phone} onChange={update('phone')} autoComplete="tel" inputMode="tel" required />
+              <PasswordField label="Password" placeholder="Create a password" name="password" value={form.password} onChange={update('password')} autoComplete="new-password" hint="8+ characters with an uppercase letter, a number and a symbol." required />
+              <PasswordField label="Confirm password" placeholder="Re-enter your password" name="confirmPassword" value={form.confirmPassword} onChange={update('confirmPassword')} autoComplete="new-password" required />
             </>
           )}
 
@@ -174,17 +174,17 @@ export default function LoginScreen({ onSignedIn, initialMode = 'login', onHome 
 
               {method === 'password' ? (
                 <>
-                  <Field label="Email or mobile number" name="identifier" value={form.identifier} onChange={update('identifier')} autoComplete="username" placeholder="you@example.com" required />
-                  <PasswordField label="Password" name="password" value={form.password} onChange={update('password')} autoComplete="current-password" required />
+                  <Field label="Email or mobile number" placeholder="Enter your email or mobile number" name="identifier" value={form.identifier} onChange={update('identifier')} autoComplete="username" required />
+                  <PasswordField label="Password" placeholder="Enter your password" name="password" value={form.password} onChange={update('password')} autoComplete="current-password" required />
                   <button type="button" className="auth-link auth-link--right" onClick={() => switchMode('forgot')}>Forgot password?</button>
                 </>
               ) : (
                 <>
                   <div className="auth-inline">
-                    <Field label="Email" name="email" type="email" value={form.email} onChange={update('email')} autoComplete="email" placeholder="you@example.com" required />
+                    <Field label="Email" placeholder="Enter your email" name="email" type="email" value={form.email} onChange={update('email')} autoComplete="email" required />
                     <Button type="button" variant="secondary" loading={sendingCode} disabled={cooldown > 0} onClick={() => requestCode('login')}>{codeLabel}</Button>
                   </div>
-                  <Field label="6-digit code" name="otp" value={form.otp} onChange={update('otp')} inputMode="numeric" maxLength={6} autoComplete="one-time-code" placeholder="123456" className="auth-otp" required />
+                  <Field label="6-digit code" placeholder="Enter the 6-digit code" name="otp" value={form.otp} onChange={update('otp')} inputMode="numeric" maxLength={6} autoComplete="one-time-code" className="auth-otp" required />
                 </>
               )}
             </>
@@ -193,12 +193,12 @@ export default function LoginScreen({ onSignedIn, initialMode = 'login', onHome 
           {mode === 'forgot' && (
             <>
               <div className="auth-inline">
-                <Field label="Email" name="email" type="email" value={form.email} onChange={update('email')} autoComplete="email" placeholder="you@example.com" required />
+                <Field label="Email" placeholder="Enter your email" name="email" type="email" value={form.email} onChange={update('email')} autoComplete="email" required />
                 <Button type="button" variant="secondary" loading={sendingCode} disabled={cooldown > 0} onClick={() => requestCode('reset')}>{codeLabel}</Button>
               </div>
-              <Field label="6-digit code" name="otp" value={form.otp} onChange={update('otp')} inputMode="numeric" maxLength={6} autoComplete="one-time-code" placeholder="123456" className="auth-otp" required />
-              <PasswordField label="New password" name="newPassword" value={form.newPassword} onChange={update('newPassword')} autoComplete="new-password" hint="8+ characters with an uppercase letter, a number and a symbol." required />
-              <PasswordField label="Confirm new password" name="confirmPassword" value={form.confirmPassword} onChange={update('confirmPassword')} autoComplete="new-password" required />
+              <Field label="6-digit code" placeholder="Enter the 6-digit code" name="otp" value={form.otp} onChange={update('otp')} inputMode="numeric" maxLength={6} autoComplete="one-time-code" className="auth-otp" required />
+              <PasswordField label="New password" placeholder="Enter a new password" name="newPassword" value={form.newPassword} onChange={update('newPassword')} autoComplete="new-password" hint="8+ characters with an uppercase letter, a number and a symbol." required />
+              <PasswordField label="Confirm new password" placeholder="Re-enter your new password" name="confirmPassword" value={form.confirmPassword} onChange={update('confirmPassword')} autoComplete="new-password" required />
             </>
           )}
 

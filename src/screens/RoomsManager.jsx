@@ -105,10 +105,10 @@ export default function RoomsManager({ client, propertyId, rooms, beds, loading,
       action={<span className="muted">{rooms.length} rooms · {beds.length} beds</span>}
     >
       <form className="room-form" onSubmit={addRoom}>
-        <Field label="Room number" name="roomNumber" value={form.roomNumber} onChange={update(setForm)('roomNumber')} placeholder="101" />
-        <Field label="Floor" name="floor" value={form.floor} onChange={update(setForm)('floor')} placeholder="1" />
-        <Field label="Type" name="type" value={form.type} onChange={update(setForm)('type')} placeholder="Double sharing" />
-        <Field label="Monthly rent" name="monthlyRent" value={form.monthlyRent} onChange={update(setForm)('monthlyRent')} inputMode="numeric" placeholder="8000" />
+        <Field label="Room number" placeholder="Enter room number" name="roomNumber" value={form.roomNumber} onChange={update(setForm)('roomNumber')} />
+        <Field label="Floor" placeholder="Enter floor" name="floor" value={form.floor} onChange={update(setForm)('floor')} />
+        <Field label="Type" placeholder="Enter room type" name="type" value={form.type} onChange={update(setForm)('type')} />
+        <Field label="Monthly rent" placeholder="Enter monthly rent" name="monthlyRent" value={form.monthlyRent} onChange={update(setForm)('monthlyRent')} inputMode="numeric" />
         <Button type="submit" loading={adding}>
           <Plus size={16} /> Add room
         </Button>
@@ -135,10 +135,10 @@ export default function RoomsManager({ client, propertyId, rooms, beds, loading,
                       saveRoom(room);
                     }}
                   >
-                    <Field label="Room number" name="editRoomNumber" value={editForm.roomNumber} onChange={update(setEditForm)('roomNumber')} />
-                    <Field label="Floor" name="editFloor" value={editForm.floor} onChange={update(setEditForm)('floor')} />
-                    <Field label="Type" name="editType" value={editForm.type} onChange={update(setEditForm)('type')} />
-                    <Field label="Monthly rent" name="editRent" value={editForm.monthlyRent} onChange={update(setEditForm)('monthlyRent')} inputMode="numeric" />
+                    <Field label="Room number" placeholder="Enter room number" name="editRoomNumber" value={editForm.roomNumber} onChange={update(setEditForm)('roomNumber')} />
+                    <Field label="Floor" placeholder="Enter floor" name="editFloor" value={editForm.floor} onChange={update(setEditForm)('floor')} />
+                    <Field label="Type" placeholder="Enter room type" name="editType" value={editForm.type} onChange={update(setEditForm)('type')} />
+                    <Field label="Monthly rent" placeholder="Enter monthly rent" name="editRent" value={editForm.monthlyRent} onChange={update(setEditForm)('monthlyRent')} inputMode="numeric" />
                     <div className="row-actions">
                       <Button type="submit" loading={busyId === room._id}>Save</Button>
                       <Button type="button" variant="ghost" onClick={() => setEditingId('')}>
@@ -206,7 +206,7 @@ export default function RoomsManager({ client, propertyId, rooms, beds, loading,
                       <input
                         value={openRoomId === room._id ? bedLabel : ''}
                         onChange={(event) => setBedLabel(event.target.value)}
-                        placeholder="Bed label (A, B, 1…)"
+                        placeholder="Enter bed label"
                         aria-label={`New bed label for room ${room.roomNumber}`}
                         onKeyDown={(event) => {
                           if (event.key === 'Enter') {
