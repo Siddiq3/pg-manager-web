@@ -260,18 +260,21 @@ export default function Dashboard({ client, user, entitlement, onPlans, onSignOu
             <form className="property-form" onSubmit={saveProperty}>
               <Field
                 label="Property name"
+                placeholder="Enter property name"
                 name="propertyName"
                 value={editingProperty.name}
                 onChange={(event) => setEditingProperty({ ...editingProperty, name: event.target.value })}
               />
               <Field
                 label="City"
+                placeholder="Enter city"
                 name="propertyCity"
                 value={editingProperty.city}
                 onChange={(event) => setEditingProperty({ ...editingProperty, city: event.target.value })}
               />
               <Field
                 label="Address"
+                placeholder="Enter address"
                 name="propertyAddress"
                 value={editingProperty.address}
                 onChange={(event) => setEditingProperty({ ...editingProperty, address: event.target.value })}
@@ -316,7 +319,7 @@ export default function Dashboard({ client, user, entitlement, onPlans, onSignOu
             <input
               value={newPropertyName}
               onChange={(event) => setNewPropertyName(event.target.value)}
-              placeholder="New property name"
+              placeholder="Enter property name"
               aria-label="New property name"
             />
             <Button type="submit" loading={creating} aria-label="Add property">
