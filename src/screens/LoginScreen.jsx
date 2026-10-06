@@ -5,6 +5,10 @@ import { Banner, Button, Field, PasswordField } from '../components/ui';
 import { BedBoard } from '../components/BedBoard';
 import '../auth.css';
 
+// Sign-in with an email code is off for now; the code stays for later. Set to true to
+// show the Password / Email code switch again. Password reset still uses codes.
+const OTP_LOGIN_ENABLED = false;
+
 const emptyForm = {
   name: '',
   identifier: '',
@@ -167,10 +171,12 @@ export default function LoginScreen({ onSignedIn, initialMode = 'login', onHome 
 
           {mode === 'login' && (
             <>
+              {OTP_LOGIN_ENABLED && (
               <div className="auth-method" role="radiogroup" aria-label="Sign-in method">
                 <button type="button" role="radio" aria-checked={method === 'password'} onClick={() => { setMethod('password'); setError(''); }}>Password</button>
                 <button type="button" role="radio" aria-checked={method === 'otp'} onClick={() => { setMethod('otp'); setError(''); }}>Email code</button>
               </div>
+              )}
 
               {method === 'password' ? (
                 <>

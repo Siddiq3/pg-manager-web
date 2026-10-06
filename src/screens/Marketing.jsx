@@ -202,7 +202,7 @@ const EXTRAS = [
   { icon: Users, title: 'Bring in a co-owner', body: 'Give a partner or manager their own sign-in for your property. Included with Pro and Growth.' },
   { icon: Wallet, title: 'Deposits on record', body: 'Note who has paid a deposit and whose deposit you have refunded.' },
   { icon: Smartphone, title: 'Runs on your phone', body: 'Manage rooms, tenants and rent in the Android app. Use this website for your account and subscription.' },
-  { icon: LockKeyhole, title: 'Sign in your way', body: 'Use your password, or have a one-time code sent to your email.' },
+  { icon: LockKeyhole, title: 'Secure sign-in', body: 'Sign in with your password. Forgot it? Reset it with a code sent to your email.' },
   { icon: MessageCircle, title: 'Reach tenants fast', body: 'Call or open WhatsApp with a tenant from their rent entry.' },
 ];
 
