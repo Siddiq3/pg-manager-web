@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   Building2, Check, ChevronDown, LockKeyhole, Menu, MessageCircle, Smartphone, Users, Wallet, X,
 } from 'lucide-react';
-import MediaShowcase from '../components/MediaShowcase';
+import PropertyHero from '../components/PropertyHero';
 import DemoStory from '../components/DemoStory';
-import { demoGroups, heroSteps } from '../data/demoSteps';
+import { demoGroups } from '../data/demoSteps';
 import { PLANS, planFeatures } from '../data/plans';
 import '../marketing.css';
 
@@ -121,21 +121,7 @@ export default function Marketing({ onStart, onSignIn, onDeleteAccount }) {
       </header>
 
       <main id="main">
-        <section className="lp-hero" id="top">
-          <div className="lp-container lp-hero-grid">
-            <div className="lp-hero-copy">
-              <span className="lp-eyebrow">Made for Indian PG owners</span>
-              <h1 className="lp-h1">Run your PG without the register.</h1>
-              <p className="lp-hero-sub">See which beds are free, who is moving out and whose rent is still due. One place for your rooms, tenants and rent, in the app on your phone.</p>
-              <div className="lp-hero-ctas">
-                <button type="button" className="lp-btn lp-btn--primary lp-btn--lg" onClick={onStart}>Start your 30-day free trial</button>
-                <a href="#how-it-works" className="lp-btn lp-btn--ghost lp-btn--lg">See how it works</a>
-              </div>
-              <p className="lp-hero-note">No card needed to start. Made for PG and hostel owners in India.</p>
-            </div>
-          </div>
-          <div className="lp-container"><MediaShowcase steps={heroSteps} /></div>
-        </section>
+        <PropertyHero onStart={onStart} />
 
         <section className="lp-tour" id="how-it-works" aria-labelledby="tour-title">
           <div className="lp-container">

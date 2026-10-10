@@ -20,6 +20,16 @@ const widths = [320,390,768,1024,1440];
   assert.equal(await page.locator('.ds-showcase').count(),5);
   assert.deepEqual(await page.locator('.ds-showcase').evaluateAll(cards=>cards.map(c=>c.querySelectorAll('.ds-choice').length)),[3,3,3,3,3]);
   const ids=await page.locator('.ds-copy').evaluateAll(es=>es.map(e=>e.id));assert.equal(new Set(ids).size,5);check('Five independent feature cards, three named clips each, unique accessible content IDs');
+  assert.equal(await page.getByRole('radio').count(),4);
+  assert.ok(await page.getByRole('radio',{name:'Hostel/PG',exact:true}).isChecked());
+  await page.getByRole('radio',{name:'Flat',exact:true}).check();
+  assert.match(await page.locator('#hero-title').innerText(),/Flats/);
+  await page.getByRole('radio',{name:'Hostel/PG',exact:true}).check();
+  await page.keyboard.press('Tab');
+  await page.getByRole('radio',{name:'Hostel/PG',exact:true}).focus();
+  assert.notEqual(await page.locator('.ph-type.is-selected').evaluate(e=>getComputedStyle(e).outlineStyle),'none');
+  assert.ok(await page.locator('.ph-phone img').evaluate(i=>i.complete&&i.naturalWidth===720));
+  check('Property selector updates heading, native radios support keyboard focus, real local home screen loads');
   const tour=page.locator('.ds-showcase').first();
   for(const width of widths){
    await page.setViewportSize({width,height:1000});await tour.scrollIntoViewIfNeeded();
@@ -30,6 +40,7 @@ const widths = [320,390,768,1024,1440];
    }));
    for(const b of boxes){assert.ok(b.overflow<=0,'Overflow at '+width);assert.ok(b.phone.x<b.panel.x, "Video stays left of the information at "+width);assert.ok(width>560?Math.abs(b.phone.width-(width>900?220:200))<1:b.phone.width>=90&&b.phone.width<=176, "Phone fits the mobile column");}
    report.layouts.push({width,cards:boxes});await tour.screenshot({path:path.join(out,`tour-${width}.png`)});
+   await page.locator('.ph-hero').screenshot({path:path.join(out,`hero-${width}.png`),style:".lp-nav{visibility:hidden}"});
    if([390,1440].includes(width)){await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:path.join(out,`landing-${width}.png`),fullPage:true});}
   }
   check('All five cards at 320, 390, 768, 1024 and 1440px: no overflow, correct arrangement and phone sizes');

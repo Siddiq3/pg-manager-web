@@ -8,6 +8,14 @@ Inspected the clean local `main` branch of StitchBook-Web at `/Users/siddiqkolim
 
 The landing page now uses that presentation with PG Manager's violet identity, real locally stored app media, clear white cards and the actual subscription catalog. The main tour shows one phone, with the video on the left and information on the right at all screen widths, including mobile (updated at the user’s request). The account dashboard, billing and authentication styling use the same typography, spacing and controls. Existing API calls, authentication, permissions, account deletion, plan IDs, Cashfree checkout and subscription synchronization remain intact. The existing web-dashboard feature flag is unchanged; web property management is labelled planned in the public copy.
 
+## Property hero update
+
+Replaced the centred headline and four preview phones with a split introduction inspired by [RentOk's current owner landing page](https://rentok.com/). PG Manager retains its own purple palette, original local SVG property illustrations, and a genuine Sai Residency PG home screenshot exported as `public/media/dashboard.webp`. Co-Living, Hostel/PG, Flat and Studio are keyboard-accessible choices that update the introductory heading only. They do not change account, plan or property logic. The trial button still opens the existing registration flow; the demo link scrolls to the existing 15 recordings.
+
+The phone screen stays completely visible, with feature labels outside it. The hero stacks on narrow screens, with a two-column property selector on phones. The feature video cards below retain video left and information right on mobile. The bottom strip describes actual functions without customer counts, ratings, competitor assets, or unsupported network claims. No Play Store link was invented.
+
+Browser screenshots cover `screenshots/hero-320.png`, `hero-390.png`, `hero-768.png`, `hero-1024.png` and `hero-1440.png`. Production browser checks verify property selection, keyboard focus, screenshot loading and page overflow in addition to all existing tour playback checks.
+
 ## Expanded feature tour
 
 Mobile cards retain two columns, with the phone constrained to the available space (approximately 96px at 320px and 124px at 390px). Full recordings remain uncropped. Text, selectors and controls use compact spacing to prevent overflow.
@@ -60,3 +68,5 @@ Recording scope: property, tenant-form, deposit and bed-picker clips demonstrate
 Machine-readable results: `validation.json` (including real dummy account) and `validation-production.json` (served production build). Visual artifacts: `screenshots/landing-1440.png`, `screenshots/landing-390.png`, `screenshots/tour-1440.png`, `screenshots/tour-390.png`, dashboard and billing screenshots.
 
 Run `node scripts/check-plan-catalog.cjs` from this repository. Browser checks use `node scripts/verify-demo.cjs` with Playwright available (or set `PLAYWRIGHT_MODULE` and `CHROMIUM_PATH` to installed tooling). Set `DEMO_WEB_URL` to the running website; optional `DEMO_SESSION_FILE` enables the local dummy-backend dashboard checks. Credentials are never included in this repository. There was no pre-existing website test suite.
+
+Hero action checks confirmed that Watch app demos targets `#how-it-works` and Start trial opens the existing registration screen. The full development-browser run, including authenticated dashboard/billing, completed without console errors. An additional production-preview registration check at port 5187 encountered the local backend’s CORS restriction for that origin (the development origin at 5186 is allowed). Backend CORS was not changed. The production landing/media checks passed; production-preview authentication is not claimed as fully verified.
