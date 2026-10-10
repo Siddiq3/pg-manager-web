@@ -4,6 +4,7 @@ import { errorMessage } from '../lib/api';
 import { dueLabel, initials, money, shortDate } from '../lib/format';
 import { Badge, Banner, Button, Card, EmptyState, Field, Skeleton, Stat, Table } from '../components/ui';
 import RoomsManager from './RoomsManager';
+import { PLANS } from '../data/plans';
 
 const EMPTY = { rooms: [], beds: [], tenants: [], rentCycles: [] };
 
@@ -255,6 +256,11 @@ export default function Dashboard({ client, user, entitlement, onPlans, onSignOu
       </header>
 
       <main className="content">
+        <section className="account-summary" aria-label="Account and subscription">
+          <div><small>Signed in as</small><strong>{user?.name || 'PG owner'}</strong><small>{user?.email}</small></div>
+          <div><small>Subscription</small><strong>{entitlement?.status === 'TRIAL' ? `Starter trial · ${entitlement.daysRemaining} days left` : entitlement?.status === 'CO_OWNER' ? 'Co-owner access' : `${PLANS.find(p => p.id === entitlement?.plan)?.name || entitlement?.plan || 'Subscription'} · ${entitlement?.status || ''}`}</strong></div>
+          <Button variant="secondary" onClick={onPlans}>View plan & billing</Button>
+        </section>
         <div className="page-head">
           {editingProperty ? (
             <form className="property-form" onSubmit={saveProperty}>

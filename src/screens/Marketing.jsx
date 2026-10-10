@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  Building2, Check, ChevronDown, LockKeyhole, Menu, MessageCircle, Phone, Smartphone, Users, Wallet, X,
+  Building2, Check, ChevronDown, LockKeyhole, Menu, MessageCircle, Smartphone, Users, Wallet, X,
 } from 'lucide-react';
-import { BedBoard, countBeds } from '../components/BedBoard';
+import MediaShowcase from '../components/MediaShowcase';
+import DemoStory from '../components/DemoStory';
+import { demoGroups, heroSteps } from '../data/demoSteps';
+import { PLANS, planFeatures } from '../data/plans';
 import '../marketing.css';
 
 const reducedMotion = () => typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
@@ -60,156 +63,15 @@ function TrialCard() {
   );
 }
 
-/* ───────────── The month story ───────────── */
-
-const CHAPTERS = [
-  {
-    date: '1st',
-    title: 'A new tenant moves in',
-    body: 'Pick a vacant bed, add their name, phone, rent and deposit. The bed fills on your board and their first rent cycle starts by itself.',
-  },
-  {
-    date: '5th',
-    title: 'Rent day, without the chasing',
-    body: 'See who has paid and who hasn’t. Call or WhatsApp a tenant straight from the list, then record UPI, cash or bank transfer when the money arrives.',
-  },
-  {
-    date: '18th',
-    title: 'Someone gives notice',
-    body: 'Save the notice date and the day they plan to leave. The bed is flagged, and your dashboard counts everyone vacating in the next 30 days.',
-  },
-  {
-    date: '30th',
-    title: 'The bed is ready again',
-    body: 'Check the tenant out and the bed goes back to vacant, ready for whoever calls next. Their history and deposit record stay on file.',
-  },
-];
-
-const STORY_STATE = [
-  { overrides: { '102-B': { initials: 'AK' } }, highlight: '102-B' },
-  { overrides: { '102-B': { initials: 'AK' } } },
-  { overrides: { '102-B': { initials: 'AK' }, '201-A': { state: 'notice' } }, highlight: '201-A' },
-  { overrides: { '102-B': { initials: 'AK' }, '201-A': { initials: null } }, highlight: '201-A' },
-];
-
-function StoryCard({ chapter }) {
-  if (chapter === 0) {
-    return (
-      <div className="story-card" key="c0">
-        <div className="sc-head"><span className="sc-avatar">AK</span><div><strong>Arjun Kumar</strong><span>Room 102, bed B</span></div></div>
-        <dl className="sc-facts">
-          <div><dt>Monthly rent</dt><dd>₹7,500</dd></div>
-          <div><dt>Deposit</dt><dd>₹15,000 <em className="sc-ok">Paid</em></dd></div>
-          <div><dt>Joined</dt><dd>1 October</dd></div>
-        </dl>
-      </div>
-    );
-  }
-  if (chapter === 1) {
-    const rows = [['Rahul K.', '₹8,000', true], ['Sneha M.', '₹7,500', true], ['Arjun K.', '₹7,500', false], ['Tara S.', '₹8,500', false]];
-    return (
-      <div className="story-card" key="c1">
-        <div className="sc-ledger-top"><strong>October rent</strong><span>₹15,500 of ₹31,500</span></div>
-        <div className="sc-progress"><span style={{ width: '49%' }} /></div>
-        <ul className="sc-ledger">
-          {rows.map(([name, amount, paid]) => (
-            <li key={name}>
-              <span className="sc-name">{name}</span>
-              <span className="sc-amt">{amount}</span>
-              {paid ? <em className="sc-ok">Paid</em> : (
-                <span className="sc-actions"><Phone size={14} aria-label="Call" /><MessageCircle size={14} aria-label="WhatsApp" /><em className="sc-due">Due</em></span>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  }
-  if (chapter === 2) {
-    return (
-      <div className="story-card" key="c2">
-        <div className="sc-head"><span className="sc-avatar sc-avatar--notice">NS</span><div><strong>Neha Sharma</strong><span>Room 201, bed A</span></div></div>
-        <dl className="sc-facts">
-          <div><dt>Notice given</dt><dd>18 October</dd></div>
-          <div><dt>Moving out</dt><dd>30 October</dd></div>
-          <div><dt>Vacating in 30 days</dt><dd>1 tenant</dd></div>
-        </dl>
-      </div>
-    );
-  }
-  return (
-    <div className="story-card" key="c3">
-      <div className="sc-head"><span className="sc-avatar sc-avatar--vacant"><Check size={18} /></span><div><strong>Bed 201-A is free</strong><span>Listed under vacant beds</span></div></div>
-      <p className="sc-note">Neha was checked out on the 30th. Her deposit refund is marked, and the bed is back on your dashboard for the next enquiry.</p>
-    </div>
-  );
-}
-
-function StoryVisual({ chapter }) {
-  const s = STORY_STATE[chapter];
-  return (
-    <div className="story-visual">
-      <BedBoard compact overrides={s.overrides} highlight={s.highlight} />
-      <div className="story-card-slot"><StoryCard chapter={chapter} /></div>
-    </div>
-  );
-}
-
-function MonthStory() {
-  const [chapter, setChapter] = useState(0);
-  const refs = useRef([]);
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && setChapter(Number(e.target.dataset.index))),
-      { rootMargin: '-45% 0px -45% 0px' },
-    );
-    refs.current.forEach((el) => el && observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <section className="lp-story" id="how-it-works" aria-labelledby="story-title">
-      <div className="lp-container">
-        <h2 id="story-title" className="lp-h2 lp-story-title">One month at a 21-bed PG.</h2>
-        <p className="lp-lede">What PG Manager does on the days that usually mean a phone call, a notebook and a reminder.</p>
-        <div className="story-grid">
-          <ol className="story-steps">
-            {CHAPTERS.map((c, i) => (
-              <li key={c.date} data-index={i} ref={(el) => { refs.current[i] = el; }} className={`story-step${chapter === i ? ' is-active' : ''}`}>
-                <span className="story-date">{c.date}</span>
-                <h3>{c.title}</h3>
-                <p>{c.body}</p>
-                <div className="story-inline"><StoryVisual chapter={i} /></div>
-              </li>
-            ))}
-          </ol>
-          <div className="story-sticky" aria-hidden="true">
-            <div className="story-calendar">
-              {CHAPTERS.map((c, i) => <span key={c.date} className={chapter === i ? 'on' : ''}>{c.date}</span>)}
-            </div>
-            <StoryVisual chapter={chapter} />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ───────────── Page ───────────── */
 
 const EXTRAS = [
   { icon: Building2, title: 'More than one building', body: 'Run up to 3 properties on Pro, or 10 on Growth, and switch between them in the app.' },
   { icon: Users, title: 'Bring in a co-owner', body: 'Give a partner or manager their own sign-in for your property. Included with Pro and Growth.' },
   { icon: Wallet, title: 'Deposits on record', body: 'Note who has paid a deposit and whose deposit you have refunded.' },
-  { icon: Smartphone, title: 'Runs on your phone', body: 'Manage rooms, tenants and rent in the Android app. Use this website for your account and subscription.' },
+  { icon: Smartphone, title: 'Runs on your phone', body: 'Manage rooms, tenants and rent in the Android app. Use this website for your account and subscription. Web property management is planned.' },
   { icon: LockKeyhole, title: 'Secure sign-in', body: 'Sign in with your password. Forgot it? Reset it with a code sent to your email.' },
   { icon: MessageCircle, title: 'Reach tenants fast', body: 'Call or open WhatsApp with a tenant from their rent entry.' },
-];
-
-const PLANS = [
-  { name: 'Starter', price: 299, lines: ['1 property', '150 beds', 'No co-owners', 'Standard support'] },
-  { name: 'Pro', price: 699, featured: true, lines: ['Up to 3 properties', '450 beds', 'Up to 2 co-owners', 'Standard support'] },
-  { name: 'Growth', price: 999, lines: ['Up to 10 properties', '1,000 beds', 'Up to 4 co-owners', 'Priority support'] },
 ];
 
 const FAQS = [
@@ -223,8 +85,6 @@ const FAQS = [
 export default function Marketing({ onStart, onSignIn, onDeleteAccount }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { total, filled } = countBeds();
-  const shown = useCountUp(filled);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -264,6 +124,7 @@ export default function Marketing({ onStart, onSignIn, onDeleteAccount }) {
         <section className="lp-hero" id="top">
           <div className="lp-container lp-hero-grid">
             <div className="lp-hero-copy">
+              <span className="lp-eyebrow">Made for Indian PG owners</span>
               <h1 className="lp-h1">Run your PG without the register.</h1>
               <p className="lp-hero-sub">See which beds are free, who is moving out and whose rent is still due. One place for your rooms, tenants and rent, in the app on your phone.</p>
               <div className="lp-hero-ctas">
@@ -272,29 +133,25 @@ export default function Marketing({ onStart, onSignIn, onDeleteAccount }) {
               </div>
               <p className="lp-hero-note">No card needed to start. Made for PG and hostel owners in India.</p>
             </div>
-            <figure className="lp-hero-board">
-              <div className="lp-board-frame">
-                <div className="lp-board-top">
-                  <div>
-                    <strong>Sai Residency</strong>
-                    <span className="lp-board-sub">Example property</span>
-                  </div>
-                  <div className="lp-board-count" aria-live="off">
-                    <span className="lp-count-num">{shown}</span><span className="lp-count-of">/{total} beds filled</span>
-                  </div>
-                </div>
-                <BedBoard animate />
-                <div className="lp-legend">
-                  <span><i className="lg lg-occ" />Occupied</span>
-                  <span><i className="lg lg-vac" />Vacant</span>
-                  <span><i className="lg lg-not" />On notice</span>
-                </div>
-              </div>
-            </figure>
           </div>
+          <div className="lp-container"><MediaShowcase steps={heroSteps} /></div>
         </section>
 
-        <MonthStory />
+        <section className="lp-tour" id="how-it-works" aria-labelledby="tour-title">
+          <div className="lp-container">
+            <div className="lp-section-head">
+              <span className="lp-eyebrow">A day at your PG</span>
+              <h2 id="tour-title" className="lp-h2">Less notebook. More peace of mind.</h2>
+              <p className="lp-lede">Real screens from PG Manager, recorded with demo data. Explore each feature card. Choose from three clips in every card.</p>
+            </div>
+            <div className="lp-tour-groups">{demoGroups.map((group, i) => (
+              <div className="lp-tour-group" key={group.key} style={{ '--tour-color': group.color }}>
+                <header className="lp-tour-group-head"><span className="lp-eyebrow">0{i + 1} · 3 real app clips</span><h3>{group.title}</h3><p>{group.body}</p></header>
+                <DemoStory steps={group.steps} label={group.title} />
+              </div>
+            ))}</div>
+          </div>
+        </section>
 
         <section className="lp-section" id="features" aria-labelledby="extras-title">
           <div className="lp-container lp-extras">
@@ -342,12 +199,17 @@ export default function Marketing({ onStart, onSignIn, onDeleteAccount }) {
             <ul className="lp-plans" aria-label="Plans">
               {PLANS.map((plan) => (
                 <li key={plan.name} className={plan.featured ? 'is-featured' : undefined}>
-                  <h3>{plan.name}</h3>
+                  <div className="lp-plan-head"><h3>{plan.name}</h3>{plan.featured && <span>For growing PGs</span>}</div>
                   <p className="lp-plan-price">₹{plan.price}<span>/month</span></p>
-                  <ul>{plan.lines.map((line) => <li key={line}><Check size={16} />{line}</li>)}</ul>
+                  <ul className="lp-plan-features" aria-label={`${plan.name} plan features`}>{planFeatures(plan).map(({ label, value, included }) => <li key={label} className={included ? 'is-included' : 'is-excluded'}>
+                    {included ? <Check size={16} aria-hidden="true" /> : <X size={16} aria-hidden="true" />}
+                    <span className="lp-feature-label">{label}</span><span className="lp-feature-value">{value}</span>
+                  </li>)}</ul>
+                  <button type="button" className={`lp-btn ${plan.featured ? 'lp-btn--primary' : 'lp-btn--ghost'}`} onClick={onStart}>Start with {plan.name}</button>
                 </li>
               ))}
             </ul>
+            <p className="lp-plan-note">Limits apply across your subscription. Co-owners are additional to the primary owner. All new accounts start with a 30-day Starter trial; choose a paid plan in billing.</p>
           </div>
         </section>
 

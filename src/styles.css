@@ -1,24 +1,24 @@
 /* ---------- tokens ---------- */
 :root {
   /* PG Manager: the StoreKit look — warm neutrals, one purple accent, soft corners. */
-  --primary-tint: #efd9ff;
-  --primary-text: #7e00cc;
+  --primary-tint: #e4dcfc;
+  --primary-text: #563ab9;
   --shadow-lift: 0 8px 24px rgba(16, 16, 20, .1), 0 2px 6px rgba(16, 16, 20, .05);
-  --font-display: 'Urbanist', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
-  --primary: #9d00ff;
-  --primary-pressed: #7e00cc;
-  --primary-subtle: #faf0ff;
-  --secondary: #45454f;
-  --background: #f4f4f6;
+  --font-display: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --primary: #7054de;
+  --primary-pressed: #563ab9;
+  --primary-subtle: #f2eeff;
+  --secondary: #495368;
+  --background: #f6f7fb;
   --surface: #ffffff;
   --surface-elevated: #ffffff;
-  --surface-muted: #eeeef1;
-  --text-primary: #101014;
-  --text-secondary: #45454f;
-  --text-muted: #5b5b66;
+  --surface-muted: #edf0f6;
+  --text-primary: #202640;
+  --text-secondary: #495368;
+  --text-muted: #626d82;
   --text-disabled: #8a8a95;
-  --border: #e6e6ea;
-  --border-subtle: #eeeef1;
+  --border: #e3e7f0;
+  --border-subtle: #edf0f6;
   --success: #15803d;
   --success-subtle: #f0fdf4;
   --warning: #b45309;
@@ -44,7 +44,7 @@
   --ok-weak: var(--success-subtle);
   --type-display: clamp(2.5rem, 5vw, 4.4rem);
   --type-h1: clamp(1.65rem, 3vw, 2.1rem);
-  --type-h2: 1.4rem;
+  --type-h2: 1.25rem;
   --type-h3: 1.05rem;
   --type-body: 1rem;
   --type-small: .875rem;
@@ -57,11 +57,11 @@
   --space-5: 24px;
   --space-6: 32px;
   --r-sm: 12px;
-  --r: 16px;
-  --r-lg: 24px;
+  --r: 12px;
+  --r-lg: 16px;
   --shadow-sm: 0 1px 2px rgba(16, 16, 20, .04), 0 4px 12px rgba(16, 16, 20, .04);
   --shadow: 0 1px 2px rgba(16, 16, 20, .04), 0 12px 32px rgba(16, 16, 20, .06);
-  --ring: 0 0 0 3px rgba(157, 0, 255, .2);
+  --ring: 0 0 0 3px rgba(112, 84, 222, .2);
   --fast: 160ms ease;
   color: var(--text);
   background: var(--bg);
@@ -1086,3 +1086,38 @@ input[aria-invalid='true']:focus { box-shadow: 0 0 0 3px rgba(190,18,60,.14); }
 h1, h2, h3, h4,
 .stat-value { font-family: var(--font-display); letter-spacing: -0.03em; }
 :focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+/* Shared StitchBook surface rules; dashboard values still come from the API. */
+.card,.stat,.auth-card { border-radius: 16px; }
+.app-shell h1,.app-shell h2,.auth-card h1 { font-family: var(--font-display); letter-spacing: -.02em; }
+.auth-subtitle { font-size: .9375rem; line-height: 1.65; letter-spacing: 0; }
+.plan-option { min-width: 0; border-radius: 16px; }
+.plan-option .billing-features { gap: 0; }
+.billing-features li { display: flex; gap: 6px; padding-block: 8px; border-bottom: 1px solid var(--border); font-size: .75rem; }
+.billing-features li svg { flex: none; margin-top: 2px; }
+.billing-features li > span { flex: 1; min-width: 0; }
+.billing-features li > small { text-align: right; flex: 0 1 38%; font-size: .75rem; }
+.billing-features .is-excluded,.billing-features .is-excluded svg { color: var(--muted); }
+.billing-limit-note { font-size: .8125rem; color: var(--muted); line-height: 1.6; }
+.account-summary { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; padding: 16px 20px; border: 1px solid var(--border); border-radius: 16px; background: var(--surface); }
+.account-summary > div { display: grid; gap: 4px; min-width: 0; }
+.account-summary small { color: var(--muted); font-size: .75rem; }
+.account-summary strong { font-size: .875rem; overflow-wrap: anywhere; }
+.account-summary .btn { margin-left: auto; }
+@media (max-width:640px) { .account-summary { padding: 16px; } .account-summary .btn { margin-left: 0; width: 100%; } }
+@media (prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } *,*::before,*::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+.billing-account { display: grid; gap: 4px; padding: 14px 16px; border: 1px solid var(--border); border-radius: 12px; background: var(--background); font-size: .875rem; overflow-wrap: anywhere; }
+.billing-account span { color: var(--muted); font-size: .8125rem; }
+
+/* Property names and trial actions can wrap before they push tablet pages sideways. */
+.topbar { flex-wrap: wrap; }
+.property-picker { min-width: 0; flex: 1 1 180px; max-width: 340px; }
+.property-picker select { min-width: 0; width: 100%; }
+.topbar-actions { max-width: 100%; flex-wrap: wrap; }
+@media (max-width:640px) { .property-picker { max-width: none; flex-basis: 100%; } }
+
+.auth-card, .auth-card > * { min-width: 0; }
+.billing-card > .btn { white-space: normal; padding: 12px 16px; }
+.billing-security { display: flex; align-items: flex-start; gap: 10px; font-size: .8125rem; color: var(--muted); line-height: 1.6; }
+.billing-security svg { flex: none; margin-top: 3px; }

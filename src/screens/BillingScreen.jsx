@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowLeft, Building2, Check, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, Building2, Check, ShieldCheck, X } from 'lucide-react';
 import { Banner, Button } from '../components/ui';
 import { errorMessage } from '../lib/api';
 
-// Same catalog the backend enforces (src/config/subscriptionPlans.js there).
-const PLANS = [
-  { id: 'STARTER', name: 'Starter', price: 299, lines: ['1 property', '150 beds', 'No co-owners', 'Standard support'] },
-  { id: 'PRO', name: 'Pro', price: 699, lines: ['Up to 3 properties', '450 beds', 'Up to 2 co-owners', 'Standard support'] },
-  { id: 'GROWTH', name: 'Growth', price: 999, lines: ['Up to 10 properties', '1,000 beds', 'Up to 4 co-owners', 'Priority support'] },
-];
+import { PLANS, planFeatures } from '../data/plans';
 
 let sdkPromise;
 function loadCashfree() {
@@ -26,7 +21,7 @@ function loadCashfree() {
   return sdkPromise;
 }
 
-export default function BillingScreen({ client, entitlement, onActive, onBack, onSignOut }) {
+export default function BillingScreen({ client, user, entitlement, onActive, onBack, onSignOut }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [status, setStatus] = useState(entitlement);
@@ -83,6 +78,7 @@ export default function BillingScreen({ client, entitlement, onActive, onBack, o
           <span className="brand-mark"><Building2 size={20} /></span>
           <div><strong>PG Manager</strong><p>Plan & billing</p></div>
         </div>
+        {user?.email && <div className="billing-account"><strong>{user.name || 'PG owner'}</strong><span>{user.email}</span></div>}
         <h1>{title}</h1>
         <p className="auth-subtitle">{subtitle}</p>
         {status?.hasAccess && <p className="auth-subtitle">Manage your rooms, tenants and rent in the PG Manager Android app, signed in with this account.</p>}
@@ -92,11 +88,14 @@ export default function BillingScreen({ client, entitlement, onActive, onBack, o
             <button key={p.id} type="button" role="radio" aria-checked={current ? current.id === p.id : plan === p.id} disabled={!!current} className={`plan-option${(current ? current.id === p.id : plan === p.id) ? ' is-selected' : ''}`} onClick={() => setPlan(p.id)}>
               <span className="plan-name">{p.name}{tag(p) && <em className="plan-tag">{tag(p)}</em>}</span>
               <span className="plan-price">₹{p.price}<small>/month</small></span>
-              <ul>{p.lines.map((line) => <li key={line}><Check size={14} />{line}</li>)}</ul>
+              <ul className="billing-features">{planFeatures(p).map(({label, value, included}) => <li key={label} className={included ? '' : 'is-excluded'}>
+                {included ? <Check size={14} aria-hidden="true" /> : <X size={14} aria-hidden="true" />}<span>{label}</span><small>{value}</small>
+              </li>)}</ul>
             </button>
           ))}
         </div>
 
+        <p className="billing-limit-note">Limits apply across your subscription. Co-owners are additional to the primary owner.</p>
         <Banner>{error}</Banner>
         {!current && <>
           <div className="billing-security">

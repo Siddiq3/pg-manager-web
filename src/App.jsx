@@ -90,6 +90,7 @@ function AppExperience({ deletionMode = false, onExitDeletion, authMode = 'login
     return (
       <BillingScreen
         client={client}
+        user={user}
         entitlement={entitlement}
         onActive={(next) => { setEntitlement(next); setEntitlementState('ready'); setShowPlans(false); }}
         onBack={WEB_DASHBOARD && entitlement.hasAccess ? () => setShowPlans(false) : undefined}

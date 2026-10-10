@@ -1,0 +1,529 @@
+{
+  "layouts": [
+    {
+      "width": 320,
+      "cards": [
+        {
+          "width": 320,
+          "overflow": 0,
+          "phone": {
+            "x": 29,
+            "y": 109.34375,
+            "width": 95.59375,
+            "bottom": 314.4375
+          },
+          "panel": {
+            "x": 137.59375,
+            "y": 89.34375
+          }
+        },
+        {
+          "width": 320,
+          "overflow": 0,
+          "phone": {
+            "x": 29,
+            "y": 844.203125,
+            "width": 95.59375,
+            "bottom": 1049.296875
+          },
+          "panel": {
+            "x": 137.59375,
+            "y": 824.203125
+          }
+        },
+        {
+          "width": 320,
+          "overflow": 0,
+          "phone": {
+            "x": 29,
+            "y": 1619.34375,
+            "width": 95.59375,
+            "bottom": 1824.4375
+          },
+          "panel": {
+            "x": 137.59375,
+            "y": 1599.34375
+          }
+        },
+        {
+          "width": 320,
+          "overflow": 0,
+          "phone": {
+            "x": 29,
+            "y": 2394.484375,
+            "width": 95.59375,
+            "bottom": 2599.578125
+          },
+          "panel": {
+            "x": 137.59375,
+            "y": 2374.484375
+          }
+        },
+        {
+          "width": 320,
+          "overflow": 0,
+          "phone": {
+            "x": 29,
+            "y": 3169.625,
+            "width": 95.59375,
+            "bottom": 3374.71875
+          },
+          "panel": {
+            "x": 137.59375,
+            "y": 3149.625
+          }
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "cards": [
+        {
+          "width": 390,
+          "overflow": 0,
+          "phone": {
+            "x": 29,
+            "y": 108.90625,
+            "width": 123.59375,
+            "bottom": 376.21875
+          },
+          "panel": {
+            "x": 165.59375,
+            "y": 88.90625
+          }
+        },
+        {
+          "width": 390,
+          "overflow": 0,
+          "phone": {
+            "x": 29,
+            "y": 800.46875,
+            "width": 123.59375,
+            "bottom": 1067.78125
+          },
+          "panel": {
+            "x": 165.59375,
+            "y": 780.46875
+          }
+        },
+        {
+          "width": 390,
+          "overflow": 0,
+          "phone": {
+            "x": 29,
+            "y": 1512.171875,
+            "width": 123.59375,
+            "bottom": 1779.484375
+          },
+          "panel": {
+            "x": 165.59375,
+            "y": 1492.171875
+          }
+        },
+        {
+          "width": 390,
+          "overflow": 0,
+          "phone": {
+            "x": 29,
+            "y": 2223.875,
+            "width": 123.59375,
+            "bottom": 2491.1875
+          },
+          "panel": {
+            "x": 165.59375,
+            "y": 2203.875
+          }
+        },
+        {
+          "width": 390,
+          "overflow": 0,
+          "phone": {
+            "x": 29,
+            "y": 2935.578125,
+            "width": 123.59375,
+            "bottom": 3202.890625
+          },
+          "panel": {
+            "x": 165.59375,
+            "y": 2915.578125
+          }
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "cards": [
+        {
+          "width": 768,
+          "overflow": 0,
+          "phone": {
+            "x": 68.234375,
+            "y": 129,
+            "width": 200,
+            "bottom": 561.21875
+          },
+          "panel": {
+            "x": 300.46875,
+            "y": 113
+          }
+        },
+        {
+          "width": 768,
+          "overflow": 0,
+          "phone": {
+            "x": 68.234375,
+            "y": 821,
+            "width": 200,
+            "bottom": 1253.21875
+          },
+          "panel": {
+            "x": 300.46875,
+            "y": 805
+          }
+        },
+        {
+          "width": 768,
+          "overflow": 0,
+          "phone": {
+            "x": 68.234375,
+            "y": 1513,
+            "width": 200,
+            "bottom": 1945.21875
+          },
+          "panel": {
+            "x": 300.46875,
+            "y": 1497
+          }
+        },
+        {
+          "width": 768,
+          "overflow": 0,
+          "phone": {
+            "x": 68.234375,
+            "y": 2205,
+            "width": 200,
+            "bottom": 2637.21875
+          },
+          "panel": {
+            "x": 300.46875,
+            "y": 2189
+          }
+        },
+        {
+          "width": 768,
+          "overflow": 0,
+          "phone": {
+            "x": 68.234375,
+            "y": 2897,
+            "width": 200,
+            "bottom": 3329.21875
+          },
+          "panel": {
+            "x": 300.46875,
+            "y": 2881
+          }
+        }
+      ]
+    },
+    {
+      "width": 1024,
+      "cards": [
+        {
+          "width": 1024,
+          "overflow": 0,
+          "phone": {
+            "x": 116.796875,
+            "y": 137,
+            "width": 220,
+            "bottom": 613.65625
+          },
+          "panel": {
+            "x": 401.59375,
+            "y": 113
+          }
+        },
+        {
+          "width": 1024,
+          "overflow": 0,
+          "phone": {
+            "x": 116.796875,
+            "y": 893.265625,
+            "width": 220,
+            "bottom": 1369.921875
+          },
+          "panel": {
+            "x": 401.59375,
+            "y": 869.265625
+          }
+        },
+        {
+          "width": 1024,
+          "overflow": 0,
+          "phone": {
+            "x": 116.796875,
+            "y": 1649.53125,
+            "width": 220,
+            "bottom": 2126.1875
+          },
+          "panel": {
+            "x": 401.59375,
+            "y": 1625.53125
+          }
+        },
+        {
+          "width": 1024,
+          "overflow": 0,
+          "phone": {
+            "x": 116.796875,
+            "y": 2405.796875,
+            "width": 220,
+            "bottom": 2882.453125
+          },
+          "panel": {
+            "x": 401.59375,
+            "y": 2381.796875
+          }
+        },
+        {
+          "width": 1024,
+          "overflow": 0,
+          "phone": {
+            "x": 116.796875,
+            "y": 3162.0625,
+            "width": 220,
+            "bottom": 3638.71875
+          },
+          "panel": {
+            "x": 401.59375,
+            "y": 3138.0625
+          }
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "cards": [
+        {
+          "width": 1440,
+          "overflow": 0,
+          "phone": {
+            "x": 324.796875,
+            "y": 137.46875,
+            "width": 220,
+            "bottom": 614.125
+          },
+          "panel": {
+            "x": 609.59375,
+            "y": 113.46875
+          }
+        },
+        {
+          "width": 1440,
+          "overflow": 0,
+          "phone": {
+            "x": 324.796875,
+            "y": 897.578125,
+            "width": 220,
+            "bottom": 1374.234375
+          },
+          "panel": {
+            "x": 609.59375,
+            "y": 873.578125
+          }
+        },
+        {
+          "width": 1440,
+          "overflow": 0,
+          "phone": {
+            "x": 324.796875,
+            "y": 1657.6875,
+            "width": 220,
+            "bottom": 2134.34375
+          },
+          "panel": {
+            "x": 609.59375,
+            "y": 1633.6875
+          }
+        },
+        {
+          "width": 1440,
+          "overflow": 0,
+          "phone": {
+            "x": 324.796875,
+            "y": 2417.796875,
+            "width": 220,
+            "bottom": 2894.453125
+          },
+          "panel": {
+            "x": 609.59375,
+            "y": 2393.796875
+          }
+        },
+        {
+          "width": 1440,
+          "overflow": 0,
+          "phone": {
+            "x": 324.796875,
+            "y": 3177.90625,
+            "width": 220,
+            "bottom": 3654.5625
+          },
+          "panel": {
+            "x": 609.59375,
+            "y": 3153.90625
+          }
+        }
+      ]
+    }
+  ],
+  "media": [
+    {
+      "src": "/media/rooms.mp4",
+      "duration": 12.966667,
+      "width": 720,
+      "height": 1600,
+      "muted": true,
+      "inline": true,
+      "paused": true
+    },
+    {
+      "src": "/media/occupancy.mp4",
+      "duration": 12.966667,
+      "width": 720,
+      "height": 1600,
+      "muted": true,
+      "inline": true,
+      "paused": true
+    },
+    {
+      "src": "/media/properties.mp4",
+      "duration": 12.966667,
+      "width": 720,
+      "height": 1600,
+      "muted": true,
+      "inline": true,
+      "paused": true
+    },
+    {
+      "src": "/media/add-tenant.mp4",
+      "duration": 12.966667,
+      "width": 720,
+      "height": 1600,
+      "muted": true,
+      "inline": true,
+      "paused": true
+    },
+    {
+      "src": "/media/tenants.mp4",
+      "duration": 13,
+      "width": 720,
+      "height": 1600,
+      "muted": true,
+      "inline": true,
+      "paused": true
+    },
+    {
+      "src": "/media/bed-move.mp4",
+      "duration": 12.966667,
+      "width": 720,
+      "height": 1600,
+      "muted": true,
+      "inline": true,
+      "paused": true
+    },
+    {
+      "src": "/media/rent.mp4",
+      "duration": 12.966667,
+      "width": 720,
+      "height": 1600,
+      "muted": true,
+      "inline": true,
+      "paused": true
+    },
+    {
+      "src": "/media/deposit.mp4",
+      "duration": 12.966667,
+      "width": 720,
+      "height": 1600,
+      "muted": true,
+      "inline": true,
+      "paused": true
+    },
+    {
+      "src": "/media/notice.mp4",
+      "duration": 12.966667,
+      "width": 720,
+      "height": 1600,
+      "muted": true,
+      "inline": true,
+      "paused": true
+    },
+    {
+      "src": "/media/staff.mp4",
+      "duration": 12.966667,
+      "width": 720,
+      "height": 1600,
+      "muted": true,
+      "inline": true,
+      "paused": true
+    },
+    {
+      "src": "/media/salary.mp4",
+      "duration": 12.966667,
+      "width": 720,
+      "height": 1600,
+      "muted": true,
+      "inline": true,
+      "paused": true
+    },
+    {
+      "src": "/media/daily-wages.mp4",
+      "duration": 12.966667,
+      "width": 720,
+      "height": 1600,
+      "muted": true,
+      "inline": true,
+      "paused": true
+    },
+    {
+      "src": "/media/expenses.mp4",
+      "duration": 12.966667,
+      "width": 720,
+      "height": 1600,
+      "muted": true,
+      "inline": true,
+      "paused": true
+    },
+    {
+      "src": "/media/finance-report.mp4",
+      "duration": 13,
+      "width": 720,
+      "height": 1600,
+      "muted": true,
+      "inline": true,
+      "paused": true
+    },
+    {
+      "src": "/media/pending.mp4",
+      "duration": 12.966667,
+      "width": 720,
+      "height": 1600,
+      "muted": true,
+      "inline": true,
+      "paused": true
+    }
+  ],
+  "errors": [],
+  "checks": [
+    "Five independent feature cards, three named clips each, unique accessible content IDs",
+    "All five cards at 320, 390, 768, 1024 and 1440px: no overflow, correct arrangement and phone sizes",
+    "All 15 real MP4s load and play; three choices, dots, previous/next and automatic wrap work in every card",
+    "Off-screen tour pauses and visible tour resumes",
+    "Manual pause remains paused under reduced motion",
+    "Named clip selectors have visible keyboard focus",
+    "No off-screen feature card loads its video before entering view",
+    "Network error preserves real poster and named clip navigation",
+    "Blocked autoplay shows a real poster and explicit Play",
+    "No unexpected browser console errors or uncaught exceptions"
+  ]
+}
