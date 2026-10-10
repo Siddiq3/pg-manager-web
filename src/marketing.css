@@ -267,7 +267,8 @@
 
 /* Property-focused introduction, with original illustrations and a real app screen. */
 .ph-hero { background: linear-gradient(125deg,#faf9ff 5%,#f2effc 65%,#e8e3f8); }
-.ph-grid { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1fr); gap: 44px; align-items: center; padding-block: 58px 48px; }
+.ph-grid { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1fr); gap: 44px; align-items: center; padding-block: 58px 48px; }
+.ph-skyline { position: absolute; z-index: -1; pointer-events: none; inset-inline: 0; bottom: 0; width: 100%; height: clamp(180px,30vw,360px); opacity: .22; }
 .ph-copy { min-width: 0; }
 .ph-copy h1 { font-size: clamp(2.2rem,4vw,3.5rem); line-height: 1.12; letter-spacing: -.045em; font-weight: 800; max-width: 18ch; }
 .ph-copy h1 span { color: var(--accent); }
