@@ -289,35 +289,38 @@
   .ph-phone { width: 200px; }
   .ph-feature-strip ul { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 22px; }
 }
+/* Mobile reading order: introduction, app preview, then property choice and actions. */
 @media(max-width:767px) {
-  .ph-grid { grid-template-columns: minmax(0,1.2fr) minmax(0,1fr); max-width: none; align-items: center; gap: clamp(10px,2.5vw,20px); padding-block: 28px; }
-  .ph-copy { width: 100%; text-align: left; }
-  .ph-grid > *, .ph-type, .ph-app-label > span, .ph-float > span { min-width: 0; }
-  .ph-copy h1 { font-size: clamp(1.375rem,4.5vw,2rem); max-width: 19ch; margin-inline: 0; overflow-wrap: break-word; }
-  .ph-copy .lp-eyebrow { font-size: .6875rem; letter-spacing: .04em; margin-bottom: 12px; }
-  .ph-intro { font-size: clamp(.8125rem,2.2vw,1rem); margin-top: 14px !important; line-height: 1.5; }
-  .ph-benefit { font-size: clamp(.8125rem,2vw,.9375rem); line-height: 1.5; }
-  .ph-types { margin-top: 18px; }
-  .ph-types legend { font-size: .8125rem; margin-bottom: 8px; max-width: 100%; }
-  .ph-type-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(6px,1.5vw,10px); }
-  .ph-type { gap: 3px; padding: 7px 3px; font-size: clamp(.6875rem,1.8vw,.8125rem); text-align: center; }
-  .ph-type svg { width: min(100%,72px); height: clamp(38px,9vw,54px); flex-shrink: 0; }
-  .ph-type .ph-type-check { width: 14px; height: 14px; top: 4px; right: 4px; }
-  .ph-actions { gap: 8px; margin-top: 18px; justify-content: flex-start; }
-  .ph-actions .lp-btn { flex: 1 1 100%; width: 100%; min-width: 0; max-width: 100%; padding: 9px 6px; font-size: clamp(.8125rem,2vw,.9375rem); white-space: normal; }
-  .ph-note { font-size: .75rem; line-height: 1.5; }
-  .ph-visual { width: 100%; margin-inline: 0; padding-top: 0; gap: 12px; }
-  .ph-app-label { position: static; width: 100%; gap: 6px; font-size: clamp(.75rem,2vw,.9375rem); line-height: 1.4; }
-  .ph-app-label .lp-mark { flex-shrink: 0; width: 26px; height: 26px; border-radius: 8px; }
-  .ph-app-label strong { font-size: .6875rem; }
-  .ph-phone { width: min(220px,100%); padding: 4px; border-radius: 18px; }
+  .ph-grid { grid-template-columns: minmax(0,1fr); max-width: none; gap: 28px; padding-block: 28px; }
+  .ph-copy { display: contents; }
+  .ph-heading { grid-row: 1; min-width: 0; }
+  .ph-selection { grid-row: 3; min-width: 0; }
+  .ph-copy h1 { font-size: clamp(2rem,8vw,2.75rem); max-width: 23ch; overflow-wrap: break-word; }
+  .ph-copy .lp-eyebrow { font-size: .75rem; letter-spacing: .04em; margin-bottom: 12px; }
+  .ph-intro { font-size: clamp(1rem,2.5vw,1.125rem); margin-top: 14px !important; line-height: 1.5; }
+  .ph-benefit { font-size: .9375rem; line-height: 1.5; }
+  .ph-types { margin-top: 0; }
+  .ph-types legend { font-size: 1rem; margin-bottom: 10px; max-width: 100%; }
+  .ph-type-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+  .ph-type { min-width: 0; gap: 4px; padding: 10px 6px; font-size: .8125rem; text-align: center; }
+  .ph-type svg { width: min(100%,90px); height: 60px; flex-shrink: 0; }
+  .ph-type .ph-type-check { width: 16px; height: 16px; top: 5px; right: 5px; }
+  .ph-actions { gap: 8px; margin-top: 18px; }
+  .ph-actions .lp-btn { flex: 1 1 180px; min-width: 0; max-width: 100%; padding: 10px 12px; font-size: .9375rem; white-space: normal; }
+  .ph-note { font-size: .8125rem; line-height: 1.5; }
+  .ph-visual { grid-row: 2; width: min(100%,360px); padding-top: 0; gap: 12px; }
+  .ph-app-label { position: static; max-width: 100%; gap: 8px; font-size: .9375rem; line-height: 1.4; }
+  .ph-app-label > span, .ph-float > span { min-width: 0; }
+  .ph-app-label .lp-mark { flex-shrink: 0; }
+  .ph-app-label strong { font-size: .75rem; }
+  .ph-phone { width: min(220px,80%); padding: 4px; border-radius: 18px; }
   .ph-phone img { border-radius: 14px; }
   .ph-orbit { top: 60px; border-width: 8px; }
-  .ph-visual .ph-highlights { display: grid; grid-template-columns: minmax(0,1fr); gap: 8px; margin-top: 0; }
+  .ph-visual .ph-highlights { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; margin-top: 0; }
   .ph-float { padding: 8px 6px; gap: 5px; font-size: .75rem; border-radius: 12px; line-height: 1.4; }
   .ph-float svg { width: 16px; height: 16px; }
   .ph-float strong { font-size: .6875rem; }
-  .ph-visual figcaption { margin-top: 0; font-size: .6875rem; }
+  .ph-visual figcaption { font-size: .75rem; }
   .ph-feature-strip ul { gap: 18px 12px; padding-block: 20px; }
   .ph-feature-strip li { gap: 8px; align-items: flex-start; }
   .ph-feature-strip svg { width: 20px; }
