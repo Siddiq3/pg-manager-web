@@ -13,7 +13,7 @@ const FEATURES = [
   { icon: Wallet, title: 'Rent & deposits', body: 'See paid and pending amounts' },
   { icon: ClipboardList, title: 'Staff & expenses', body: 'Track your daily costs' },
 ];
-const HERO_PROPERTY_NAMES = ['PGs', 'Hostels', 'Co-Living'];
+const HERO_PROPERTY_NAMES = ['PGs', 'Hostels', 'Co-Living', 'Rental Spaces'];
 
 // Original local illustrations for the independent property selector.
 function PropertyIllustration({ kind }) {
@@ -39,7 +39,7 @@ export default function PropertyHero({ onStart }) {
       <div className="ph-copy">
         <div className="ph-heading">
         <span className="lp-eyebrow">Made for Indian property owners</span>
-        <h1 id="hero-title" aria-label="The easier way to manage your PGs, Hostels and Co-Living.">The easier way to manage your{' '}
+        <h1 id="hero-title" aria-label="The easier way to manage your PGs, Hostels, Co-Living and Rental Spaces.">The easier way to manage your{' '}
           <span className="ph-rotating-word" aria-hidden="true">{HERO_PROPERTY_NAMES.map((name, i) => (
             <span key={name} className="ph-rotating-item" style={{ '--word-delay': `${i === 0 ? 0 : (i - HERO_PROPERTY_NAMES.length) * 3}s` }}>{name}.</span>
           ))}</span>
