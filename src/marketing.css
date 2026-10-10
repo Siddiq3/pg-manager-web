@@ -243,6 +243,28 @@
   .ds-choice { font-size: .6875rem; padding: 8px 9px; }
 }
 
+/* Mobile tour cards: centered phone above a readable white content panel. */
+@media (max-width: 767px) {
+  .ds-showcase { grid-template-columns: minmax(0,1fr); gap: 20px; padding: 12px; border-radius: 28px; }
+  .ds-stage { padding: 16px 12px 8px; align-items: center; }
+  .ds-phone { width: clamp(128px,34vw,200px); max-width: 100%; padding: 4px; border-radius: 22px; }
+  .ds-media,.ds-media video,.ds-media img { border-radius: 18px; }
+  .ds-panel { border-radius: 24px; min-width: 0; }
+  .ds-choices { margin: 20px 20px 0; gap: 6px; }
+  .ds-choice { min-width: 0; max-width: 100%; padding: 8px 10px; font-size: .75rem; overflow-wrap: break-word; }
+  .ds-copy { min-height: 0; padding: 20px; }
+  .ds-badge { max-width: 100%; padding: 8px 12px; font-size: .8125rem; }
+  .ds-number { margin-top: 16px; font-size: .75rem; }
+  .ds-copy h4 { font-size: clamp(1.375rem,5.5vw,1.875rem); line-height: 1.25; }
+  .ds-copy p { font-size: 1rem; line-height: 1.6; }
+  .ds-controls { padding: 4px 12px 20px; gap: 8px; }
+  .ds-progress-group { padding: 4px; }
+  .ds-progress-group,.ds-dots,.ds-arrows { gap: 0; }
+  .ds-dot { width: 24px; }
+  .ds-dot.is-active { width: 36px; }
+  .ds-dot.is-active .ds-dot-track { width: 28px; }
+}
+
 /* Property-focused introduction, with original illustrations and a real app screen. */
 .ph-hero { background: linear-gradient(125deg,#faf9ff 5%,#f2effc 65%,#e8e3f8); }
 .ph-grid { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1fr); gap: 44px; align-items: center; padding-block: 58px 48px; }
