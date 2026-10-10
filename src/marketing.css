@@ -289,23 +289,38 @@
   .ph-phone { width: 200px; }
   .ph-feature-strip ul { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 22px; }
 }
-@media(max-width:560px) {
-  .ph-grid { gap: 30px; padding-top: 32px; }
-  .ph-copy h1 { font-size: clamp(2rem,8.3vw,2.65rem); }
-  .ph-copy .lp-eyebrow { font-size: .6875rem; }
-  .ph-intro { font-size: 1rem; margin-top: 18px !important; }
-  .ph-benefit { font-size: .875rem; }
-  .ph-types { margin-top: 24px; }
+/* Mobile reading order: introduction, app preview, then property choice and actions. */
+@media(max-width:767px) {
+  .ph-grid { grid-template-columns: minmax(0,1fr); max-width: none; gap: 28px; padding-block: 28px; }
+  .ph-copy { display: contents; }
+  .ph-heading { grid-row: 1; min-width: 0; }
+  .ph-selection { grid-row: 3; min-width: 0; }
+  .ph-copy h1 { font-size: clamp(2rem,8vw,2.75rem); max-width: 23ch; overflow-wrap: break-word; }
+  .ph-copy .lp-eyebrow { font-size: .75rem; letter-spacing: .04em; margin-bottom: 12px; }
+  .ph-intro { font-size: clamp(1rem,2.5vw,1.125rem); margin-top: 14px !important; line-height: 1.5; }
+  .ph-benefit { font-size: .9375rem; line-height: 1.5; }
+  .ph-types { margin-top: 0; }
+  .ph-types legend { font-size: 1rem; margin-bottom: 10px; max-width: 100%; }
   .ph-type-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
-  .ph-type { flex-direction: row; gap: 4px; padding: 10px 6px; font-size: .75rem; }
-  .ph-type svg { width: 58px; height: 48px; }
-  .ph-type .ph-type-check { width: 14px; height: 14px; top: 4px; right: 4px; }
-  .ph-actions .lp-btn { width: 100%; }
-  .ph-phone { width: 200px; }
-  .ph-float { padding: 8px 10px; gap: 6px; font-size: .6875rem; border-radius: 12px; }
-  .ph-float strong { font-size: .625rem; }
-  .ph-float--beds { top: 156px; left: 0; }
-  .ph-float--rent { bottom: 115px; right: 0; }
+  .ph-type { min-width: 0; gap: 4px; padding: 10px 6px; font-size: .8125rem; text-align: center; }
+  .ph-type svg { width: min(100%,90px); height: 60px; flex-shrink: 0; }
+  .ph-type .ph-type-check { width: 16px; height: 16px; top: 5px; right: 5px; }
+  .ph-actions { gap: 8px; margin-top: 18px; }
+  .ph-actions .lp-btn { flex: 1 1 180px; min-width: 0; max-width: 100%; padding: 10px 12px; font-size: .9375rem; white-space: normal; }
+  .ph-note { font-size: .8125rem; line-height: 1.5; }
+  .ph-visual { grid-row: 2; width: min(100%,360px); padding-top: 0; gap: 12px; }
+  .ph-app-label { position: static; max-width: 100%; gap: 8px; font-size: .9375rem; line-height: 1.4; }
+  .ph-app-label > span, .ph-float > span { min-width: 0; }
+  .ph-app-label .lp-mark { flex-shrink: 0; }
+  .ph-app-label strong { font-size: .75rem; }
+  .ph-phone { width: min(220px,80%); padding: 4px; border-radius: 18px; }
+  .ph-phone img { border-radius: 14px; }
+  .ph-orbit { top: 60px; border-width: 8px; }
+  .ph-visual .ph-highlights { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; margin-top: 0; }
+  .ph-float { padding: 8px 6px; gap: 5px; font-size: .75rem; border-radius: 12px; line-height: 1.4; }
+  .ph-float svg { width: 16px; height: 16px; }
+  .ph-float strong { font-size: .6875rem; }
+  .ph-visual figcaption { font-size: .75rem; }
   .ph-feature-strip ul { gap: 18px 12px; padding-block: 20px; }
   .ph-feature-strip li { gap: 8px; align-items: flex-start; }
   .ph-feature-strip svg { width: 20px; }

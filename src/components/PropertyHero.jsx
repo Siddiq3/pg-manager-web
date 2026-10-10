@@ -37,10 +37,13 @@ export default function PropertyHero({ onStart }) {
   return <section className="ph-hero" id="top" aria-labelledby="hero-title">
     <div className="lp-container ph-grid">
       <div className="ph-copy">
+        <div className="ph-heading">
         <span className="lp-eyebrow">Made for Indian property owners</span>
         <h1 id="hero-title">The easier way to manage your <span>{type.heading}.</span></h1>
         <p className="ph-intro">One app for your rooms, tenants and rent.</p>
         <p className="ph-benefit">Less paperwork. More time for your property.</p>
+        </div>
+        <div className="ph-selection">
         <fieldset className="ph-types">
           <legend>I manage a</legend>
           <div className="ph-type-grid">{TYPES.map(t => <label key={t.label} className={`ph-type${selected === t.label ? ' is-selected' : ''}`}>
@@ -55,6 +58,7 @@ export default function PropertyHero({ onStart }) {
           <a className="lp-btn lp-btn--ghost lp-btn--lg" href="#how-it-works">Watch app demos</a>
         </div>
         <p className="ph-note">No card needed. Manage your property in the Android app.</p>
+        </div>
       </div>
       <figure className="ph-visual">
         <div className="ph-orbit" aria-hidden="true" />
