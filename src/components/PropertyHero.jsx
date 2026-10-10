@@ -13,8 +13,9 @@ const FEATURES = [
   { icon: Wallet, title: 'Rent & deposits', body: 'See paid and pending amounts' },
   { icon: ClipboardList, title: 'Staff & expenses', body: 'Track your daily costs' },
 ];
+const HERO_PROPERTY_NAMES = ['PGs', 'Hostels', 'Co-Living'];
 
-// Original local illustrations. Property selection changes the introduction only.
+// Original local illustrations for the independent property selector.
 function PropertyIllustration({ kind }) {
   const tall = kind === 'hostel';
   const shared = kind === 'shared';
@@ -33,13 +34,16 @@ function PropertyIllustration({ kind }) {
 
 export default function PropertyHero({ onStart }) {
   const [selected, setSelected] = useState('Hostel/PG');
-  const type = TYPES.find(t => t.label === selected);
   return <section className="ph-hero" id="top" aria-labelledby="hero-title">
     <div className="lp-container ph-grid">
       <div className="ph-copy">
         <div className="ph-heading">
         <span className="lp-eyebrow">Made for Indian property owners</span>
-        <h1 id="hero-title">The easier way to manage your <span>{type.heading}.</span></h1>
+        <h1 id="hero-title" aria-label="The easier way to manage your PGs, Hostels and Co-Living.">The easier way to manage your{' '}
+          <span className="ph-rotating-word" aria-hidden="true">{HERO_PROPERTY_NAMES.map((name, i) => (
+            <span key={name} className="ph-rotating-item" style={{ '--word-delay': `${i === 0 ? 0 : (i - HERO_PROPERTY_NAMES.length) * 3}s` }}>{name}.</span>
+          ))}</span>
+        </h1>
         <p className="ph-intro">One app for your rooms, tenants and rent.</p>
         <p className="ph-benefit">Less paperwork. More time for your property.</p>
         </div>
