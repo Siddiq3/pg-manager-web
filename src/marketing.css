@@ -271,6 +271,17 @@
 .ph-copy { min-width: 0; }
 .ph-copy h1 { font-size: clamp(2.2rem,4vw,3.5rem); line-height: 1.12; letter-spacing: -.045em; font-weight: 800; max-width: 18ch; }
 .ph-copy h1 span { color: var(--accent); }
+.ph-rotating-word { display: inline-grid; max-width: 100%; vertical-align: bottom; }
+.ph-rotating-item { grid-area: 1 / 1; opacity: 0; white-space: nowrap; animation: ph-word-cycle 9s ease-in-out infinite; animation-delay: var(--word-delay); }
+@keyframes ph-word-cycle {
+  0%,26% { opacity: 1; transform: translateY(0); }
+  33%,96% { opacity: 0; transform: translateY(-.2em); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@media(prefers-reduced-motion:reduce) {
+  .ph-rotating-item { animation: none; transform: none; opacity: 0; }
+  .ph-rotating-item:first-child { opacity: 1; }
+}
 .ph-intro { margin-top: 22px !important; font-size: 1.125rem; font-weight: 600; color: var(--ink) !important; }
 .ph-benefit { margin-top: 6px !important; color: var(--accent-deep) !important; font-size: 1rem; }
 .ph-types { padding: 0; margin: 28px 0 0; border: 0; min-width: 0; }
