@@ -153,9 +153,9 @@ export default function LoginScreen({ onSignedIn, initialMode = 'login', onHome 
           </header>
 
           {mode !== 'forgot' && (
-            <div className="auth-tabs" role="tablist" aria-label="Account">
-              <button type="button" role="tab" aria-selected={mode === 'login'} onClick={() => switchMode('login')}>Sign in</button>
-              <button type="button" role="tab" aria-selected={mode === 'register'} onClick={() => switchMode('register')}>Create account</button>
+            <div className="auth-tabs" role="group" aria-label="Account">
+              <button type="button" aria-pressed={mode === 'login'} onClick={() => switchMode('login')}>Sign in</button>
+              <button type="button" aria-pressed={mode === 'register'} onClick={() => switchMode('register')}>Create account</button>
             </div>
           )}
 
@@ -213,11 +213,9 @@ export default function LoginScreen({ onSignedIn, initialMode = 'login', onHome 
 
           <Button type="submit" loading={busy} className="auth-submit">{submitLabel}</Button>
 
-          <p className="auth-switch">
-            {mode === 'login' && <>New to PG Manager? <button type="button" className="auth-link" onClick={() => switchMode('register')}>Start your free trial</button></>}
-            {mode === 'register' && <>Already have an account? <button type="button" className="auth-link" onClick={() => switchMode('login')}>Sign in</button></>}
-            {mode === 'forgot' && <button type="button" className="auth-link" onClick={() => switchMode('login')}>Back to sign in</button>}
-          </p>
+          {mode === 'forgot' && (
+            <p className="auth-switch"><button type="button" className="auth-link" onClick={() => switchMode('login')}>Back to sign in</button></p>
+          )}
         </form>
       </section>
     </main>

@@ -1092,11 +1092,11 @@ h1, h2, h3, h4,
 .app-shell h1,.app-shell h2,.auth-card h1 { font-family: var(--font-display); letter-spacing: -.02em; }
 .auth-subtitle { font-size: .9375rem; line-height: 1.65; letter-spacing: 0; }
 .plan-option { min-width: 0; border-radius: 16px; }
-.plan-option .billing-features { gap: 0; }
-.billing-features li { display: flex; gap: 6px; padding-block: 8px; border-bottom: 1px solid var(--border); font-size: .75rem; }
-.billing-features li svg { flex: none; margin-top: 2px; }
-.billing-features li > span { flex: 1; min-width: 0; }
-.billing-features li > small { text-align: right; flex: 0 1 38%; font-size: .75rem; }
+.plan-option .billing-features { display: grid; gap: 0; margin-top: 4px; }
+.billing-features > span { display: flex; gap: 6px; padding-block: 8px; border-bottom: 1px solid var(--border); font-size: .75rem; }
+.billing-features > span svg { flex: none; margin-top: 2px; }
+.billing-features > span > span { flex: 1; min-width: 0; }
+.billing-features > span > small { text-align: right; flex: 0 1 38%; font-size: .75rem; }
 .billing-features .is-excluded,.billing-features .is-excluded svg { color: var(--muted); }
 .billing-limit-note { font-size: .8125rem; color: var(--muted); line-height: 1.6; }
 .account-summary { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; padding: 16px 20px; border: 1px solid var(--border); border-radius: 16px; background: var(--surface); }

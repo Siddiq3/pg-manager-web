@@ -5,7 +5,7 @@ import {
 import PropertyHero from '../components/PropertyHero';
 import DemoStory from '../components/DemoStory';
 import { demoGroups } from '../data/demoSteps';
-import { PLANS, planFeatures } from '../data/plans';
+import { PLANS, PLAN_NOTE, planHighlights } from '../data/plans';
 import '../marketing.css';
 
 const reducedMotion = () => typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
@@ -67,10 +67,10 @@ function TrialCard() {
 
 const EXTRAS = [
   { icon: Building2, title: 'More than one building', body: 'Run up to 3 properties on Pro, or 10 on Growth, and switch between them in the app.' },
-  { icon: Users, title: 'Bring in a co-owner', body: 'Give a partner or manager their own sign-in for your property. Included with Pro and Growth.' },
+  { icon: Users, title: 'Bring in a co-owner', body: 'Give a partner or manager their own sign-in. On Pro and Growth.' },
   { icon: Wallet, title: 'Deposits on record', body: 'Note who has paid a deposit and whose deposit you have refunded.' },
-  { icon: Smartphone, title: 'Runs on your phone', body: 'Manage rooms, tenants and rent in the Android app. Use this website for your account and subscription. Web property management is planned.' },
-  { icon: LockKeyhole, title: 'Secure sign-in', body: 'Sign in with your password. Forgot it? Reset it with a code sent to your email.' },
+  { icon: Smartphone, title: 'Runs on your phone', body: 'Manage rooms, tenants and rent in the Android app. Use this website for your account and billing.' },
+  { icon: LockKeyhole, title: 'Secure sign-in', body: 'Forgot your password? Reset it with a code sent to your email.' },
   { icon: MessageCircle, title: 'Reach tenants fast', body: 'Call or open WhatsApp with a tenant from their rent entry.' },
 ];
 
@@ -100,20 +100,20 @@ export default function Marketing({ onStart, onSignIn, onDeleteAccount }) {
       <a className="lp-skip" href="#main">Skip to content</a>
       <header className={`lp-nav${scrolled ? ' is-scrolled' : ''}`}>
         <div className="lp-container lp-nav-row">
-          <a href="#top" className="lp-brand" aria-label="PG Manager home"><span className="lp-mark">PG</span>PG Manager</a>
+          <a href="#top" className="lp-brand" aria-label="PG Manager home"><span className="lp-mark" aria-hidden="true">PG</span>PG Manager</a>
           <nav className="lp-links" aria-label="Main">
             {nav.map(([label, href]) => <a key={href} href={href}>{label}</a>)}
           </nav>
           <div className="lp-nav-actions">
             <button type="button" className="lp-btn lp-btn--text" onClick={onSignIn}>Sign in</button>
             <button type="button" className="lp-btn lp-btn--primary" onClick={onStart}>Start free</button>
-            <button type="button" className="lp-menu-btn" aria-expanded={menuOpen} aria-label="Menu" onClick={() => setMenuOpen((v) => !v)}>
+            <button type="button" className="lp-menu-btn" aria-expanded={menuOpen} aria-controls="lp-mobile-menu" aria-label="Menu" onClick={() => setMenuOpen((v) => !v)}>
               {menuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
         {menuOpen && (
-          <div className="lp-mobile-menu">
+          <div className="lp-mobile-menu" id="lp-mobile-menu">
             {nav.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
             <button type="button" className="lp-btn lp-btn--ghost" onClick={onSignIn}>Sign in</button>
           </div>
@@ -126,13 +126,12 @@ export default function Marketing({ onStart, onSignIn, onDeleteAccount }) {
         <section className="lp-tour" id="how-it-works" aria-labelledby="tour-title">
           <div className="lp-container">
             <div className="lp-section-head">
-              <span className="lp-eyebrow">A day at your PG</span>
               <h2 id="tour-title" className="lp-h2">Less notebook. More peace of mind.</h2>
-              <p className="lp-lede">Real screens from PG Manager, recorded with demo data. Explore each feature card. Choose from three clips in every card.</p>
+              <p className="lp-lede">Real app screens, recorded with demo data.</p>
             </div>
-            <div className="lp-tour-groups">{demoGroups.map((group, i) => (
+            <div className="lp-tour-groups">{demoGroups.map((group) => (
               <div className="lp-tour-group" key={group.key} style={{ '--tour-color': group.color }}>
-                <header className="lp-tour-group-head"><span className="lp-eyebrow">0{i + 1} · 3 real app clips</span><h3>{group.title}</h3><p>{group.body}</p></header>
+                <h3 className="lp-tour-group-head">{group.title}</h3>
                 <DemoStory steps={group.steps} label={group.title} />
               </div>
             ))}</div>
@@ -143,7 +142,6 @@ export default function Marketing({ onStart, onSignIn, onDeleteAccount }) {
           <div className="lp-container lp-extras">
             <div className="lp-extras-head">
               <h2 id="extras-title" className="lp-h2">The rest of the work, handled too.</h2>
-              <p className="lp-lede">Small things that save a trip to the notebook.</p>
             </div>
             <ul className="lp-extras-list">
               {EXTRAS.map(({ icon: Icon, title, body }) => (
@@ -172,11 +170,10 @@ export default function Marketing({ onStart, onSignIn, onDeleteAccount }) {
             <TrialCard />
             <div className="lp-pricing-copy">
               <h2 id="pricing-title" className="lp-h2">Try it on your real PG first.</h2>
-              <p>Create your account and run one property with up to 150 beds for 30 days. When you need more, or when the trial ends, subscribe here on the website. Payment is by UPI or card through Cashfree.</p>
+              <p>Run one property with up to 150 beds free for 30 days. Subscribe here when you need more, by UPI or card through Cashfree.</p>
               <ul className="lp-checks">
                 <li><Check size={18} />No card needed to start</li>
-                <li><Check size={18} />Rooms, tenants and rent tracking all included</li>
-                <li><Check size={18} />Delete your account and data any time</li>
+                                <li><Check size={18} />Delete your account and data any time</li>
               </ul>
               <button type="button" className="lp-btn lp-btn--primary lp-btn--lg" onClick={onStart}>Create your account</button>
             </div>
@@ -187,7 +184,7 @@ export default function Marketing({ onStart, onSignIn, onDeleteAccount }) {
                 <li key={plan.name} className={plan.featured ? 'is-featured' : undefined}>
                   <div className="lp-plan-head"><h3>{plan.name}</h3>{plan.featured && <span>For growing PGs</span>}</div>
                   <p className="lp-plan-price">₹{plan.price}<span>/month</span></p>
-                  <ul className="lp-plan-features" aria-label={`${plan.name} plan features`}>{planFeatures(plan).map(({ label, value, included }) => <li key={label} className={included ? 'is-included' : 'is-excluded'}>
+                  <ul className="lp-plan-features" aria-label={`${plan.name} plan features`}>{planHighlights(plan).map(({ label, value, included }) => <li key={label} className={included ? 'is-included' : 'is-excluded'}>
                     {included ? <Check size={16} aria-hidden="true" /> : <X size={16} aria-hidden="true" />}
                     <span className="lp-feature-label">{label}</span><span className="lp-feature-value">{value}</span>
                   </li>)}</ul>
@@ -195,7 +192,7 @@ export default function Marketing({ onStart, onSignIn, onDeleteAccount }) {
                 </li>
               ))}
             </ul>
-            <p className="lp-plan-note">Limits apply across your subscription. Co-owners are additional to the primary owner. All new accounts start with a 30-day Starter trial; choose a paid plan in billing.</p>
+            <p className="lp-plan-note">{PLAN_NOTE}</p>
           </div>
         </section>
 
@@ -224,7 +221,7 @@ export default function Marketing({ onStart, onSignIn, onDeleteAccount }) {
       <footer className="lp-footer">
         <div className="lp-container lp-footer-row">
           <div>
-            <a href="#top" className="lp-brand"><span className="lp-mark">PG</span>PG Manager</a>
+            <a href="#top" className="lp-brand"><span className="lp-mark" aria-hidden="true">PG</span>PG Manager</a>
             <p>Rooms, tenants and rent for PG and hostel owners.</p>
           </div>
           <nav aria-label="Footer">

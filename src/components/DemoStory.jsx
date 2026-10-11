@@ -1,5 +1,5 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
+import { Pause, Play } from 'lucide-react';
 import { useMediaVisibility, useReducedMotion } from './mediaHooks';
 
 export default function DemoStory({ steps, label = "PG Manager app tour" }) {
@@ -59,11 +59,9 @@ export default function DemoStory({ steps, label = "PG Manager app tour" }) {
           {steps.map((s, i) => <button key={s.key} type="button" className={`ds-choice${i === index ? ' is-active' : ''}`} onClick={() => go(i)} aria-pressed={i === index} aria-controls={contentId}>{s.label}</button>)}
         </div>
         <div key={step.key} className="ds-copy ds-enter" id={contentId} aria-live={playing ? 'off' : 'polite'} aria-atomic="true">
-          <span className="ds-badge">{step.label}</span>
-          <span className="ds-number">0{index + 1} / 0{steps.length}</span>
           <h4>{step.title}</h4><p>{step.body}</p>
-          {failed && <p className="ds-status" role="status">The video could not load. The image shows the app screen. Try Play again or choose another clip.</p>}
-          {blocked && <p className="ds-status" role="status">Playback is paused by your browser. Press Play to try again.</p>}
+          {failed && <p className="ds-status" role="status">Video could not load. Press Play to retry.</p>}
+          {blocked && <p className="ds-status" role="status">Your browser paused playback. Press Play to retry.</p>}
         </div>
         <div className="ds-controls">
           <div className="ds-progress-group">
@@ -74,10 +72,6 @@ export default function DemoStory({ steps, label = "PG Manager app tour" }) {
               </button>)}
             </div>
             <button type="button" className="ds-icon" onClick={toggle} aria-label={playing ? 'Pause demo' : 'Play demo'}>{playing ? <Pause size={18} /> : <Play size={18} />}</button>
-          </div>
-          <div className="ds-arrows">
-            <button type="button" className="ds-icon" onClick={() => go(index - 1)} aria-label="Previous clip"><ChevronLeft size={20} /></button>
-            <button type="button" className="ds-icon" onClick={() => go(index + 1)} aria-label="Next clip"><ChevronRight size={20} /></button>
           </div>
         </div>
       </div>

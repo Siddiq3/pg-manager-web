@@ -18,3 +18,8 @@ export function planFeatures(plan) {
     { label: 'Priority support', value: plan.support === 'Priority' ? 'Included' : 'Not included', included: plan.support === 'Priority' },
   ];
 }
+
+// Rows every plan shares are summarised once in a note instead of repeated per card.
+const SHARED_ROWS = ['Rooms & occupancy', 'Tenant management', 'Rent & payment records', 'Deposit records', 'Priority support'];
+export const planHighlights = (plan) => planFeatures(plan).filter(({ label }) => !SHARED_ROWS.includes(label));
+export const PLAN_NOTE = 'Every plan includes rooms, tenants, rent and deposit records. Co-owners are in addition to the primary owner.';
