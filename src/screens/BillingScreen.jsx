@@ -3,7 +3,7 @@ import { ArrowLeft, Building2, Check, ShieldCheck, X } from 'lucide-react';
 import { Banner, Button } from '../components/ui';
 import { errorMessage } from '../lib/api';
 
-import { PLANS, planFeatures } from '../data/plans';
+import { PLANS, PLAN_NOTE, planHighlights } from '../data/plans';
 
 let sdkPromise;
 function loadCashfree() {
@@ -65,7 +65,7 @@ export default function BillingScreen({ client, user, entitlement, onActive, onB
     subtitle = `Your subscription is active at ₹${current.price}/month.`;
   } else if (onTrial) {
     title = 'Choose a plan';
-    subtitle = `${status.daysRemaining} day${status.daysRemaining === 1 ? '' : 's'} left in your 30-day free trial. The trial has Starter limits; choose a plan for more, or keep using the trial until it ends.`;
+    subtitle = `${status.daysRemaining} day${status.daysRemaining === 1 ? '' : 's'} left in your 30-day free trial. Choose a plan when you need more than Starter limits.`;
   } else if (status?.status === 'CO_OWNER') {
     title = 'Choose a plan';
     subtitle = "You use PG Manager as a co-owner through the owner's plan. Subscribe only if you also want to run a PG of your own.";
@@ -88,19 +88,19 @@ export default function BillingScreen({ client, user, entitlement, onActive, onB
             <button key={p.id} type="button" role="radio" aria-checked={current ? current.id === p.id : plan === p.id} disabled={!!current} className={`plan-option${(current ? current.id === p.id : plan === p.id) ? ' is-selected' : ''}`} onClick={() => setPlan(p.id)}>
               <span className="plan-name">{p.name}{tag(p) && <em className="plan-tag">{tag(p)}</em>}</span>
               <span className="plan-price">₹{p.price}<small>/month</small></span>
-              <ul className="billing-features">{planFeatures(p).map(({label, value, included}) => <li key={label} className={included ? '' : 'is-excluded'}>
+              <span className="billing-features">{planHighlights(p).map(({label, value, included}) => <span key={label} className={included ? undefined : 'is-excluded'}>
                 {included ? <Check size={14} aria-hidden="true" /> : <X size={14} aria-hidden="true" />}<span>{label}</span><small>{value}</small>
-              </li>)}</ul>
+              </span>)}</span>
             </button>
           ))}
         </div>
 
-        <p className="billing-limit-note">Limits apply across your subscription. Co-owners are additional to the primary owner.</p>
+        <p className="billing-limit-note">{PLAN_NOTE}</p>
         <Banner>{error}</Banner>
         {!current && <>
           <div className="billing-security">
             <ShieldCheck size={20} />
-            <span>Checkout is handled by Cashfree with UPI or card. PG Manager never receives or stores your card, UPI PIN or bank credentials.</span>
+            <span>Pay by UPI or card through Cashfree. We never see your card, UPI PIN or bank details.</span>
           </div>
           <Button onClick={subscribe} loading={busy}>Subscribe to {chosen.name} · ₹{chosen.price}/month</Button>
         </>}

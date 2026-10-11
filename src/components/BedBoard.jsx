@@ -21,7 +21,8 @@ export const SAMPLE_ROOMS = [
 export function BedBoard({ rooms = SAMPLE_ROOMS, overrides = {}, highlight, animate = false, compact = false }) {
   let order = 0;
   return (
-    <div className={`bedboard${compact ? ' bedboard--compact' : ''}${animate ? ' bedboard--animate' : ''}`}>
+    // Decorative: the caption beside it describes the board for screen readers.
+    <div className={`bedboard${compact ? ' bedboard--compact' : ''}${animate ? ' bedboard--animate' : ''}`} aria-hidden="true">
       {rooms.map(({ room, beds }) => (
         <div className="bb-room" key={room}>
           <span className="bb-room-no">{room}</span>
@@ -37,7 +38,6 @@ export function BedBoard({ rooms = SAMPLE_ROOMS, overrides = {}, highlight, anim
                   key={id}
                   className={`bb-bed bb-${state}${highlight === id ? ' bb-highlight' : ''}`}
                   style={{ '--i': i }}
-                  aria-label={`Bed ${id}: ${state}`}
                 >
                   <span className="bb-label">{label}</span>
                   {who && <span className="bb-initials">{who}</span>}
