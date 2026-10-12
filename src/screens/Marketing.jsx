@@ -222,7 +222,7 @@ export default function Marketing({ onStart, onSignIn, onDeleteAccount }) {
         <div className="lp-container lp-footer-row">
           <div>
             <a href="#top" className="lp-brand"><span className="lp-mark" aria-hidden="true">PG</span>PG Manager</a>
-            <p>Rooms, tenants and rent for PG and hostel owners.</p>
+            <p>Made with ❤️ in India. By ssiddiq</p>
           </div>
           <nav aria-label="Footer">
             <a href="#how-it-works">How it works</a>
