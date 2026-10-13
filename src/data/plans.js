@@ -1,9 +1,9 @@
 // Mirrors pg-manager-backend/src/config/subscriptionPlans.js and the mobile catalog.
 // Prices and limits here are display-only; checkout and enforcement stay on the API.
 export const PLANS = Object.freeze([
-  { id: 'STARTER', name: 'Starter', price: 299, properties: 1, beds: 150, coOwners: 0, support: 'Standard' },
-  { id: 'PRO', name: 'Pro', price: 699, properties: 3, beds: 450, coOwners: 2, support: 'Standard', featured: true },
-  { id: 'GROWTH', name: 'Growth', price: 999, properties: 10, beds: 1000, coOwners: 4, support: 'Priority' },
+  { id: 'STARTER', name: 'Starter', price: 299, properties: 1, beds: 150, coOwners: 0, staff: 1, support: 'Standard' },
+  { id: 'PRO', name: 'Pro', price: 699, properties: 3, beds: 450, coOwners: 2, staff: 2, support: 'Standard', featured: true },
+  { id: 'GROWTH', name: 'Growth', price: 999, properties: 10, beds: 1000, coOwners: 4, staff: 5, support: 'Priority' },
 ]);
 export function planFeatures(plan) {
   return [
@@ -14,6 +14,7 @@ export function planFeatures(plan) {
     { label: 'Rent & payment records', value: 'Included', included: true },
     { label: 'Deposit records', value: 'Included', included: true },
     { label: 'Co-owner logins', value: plan.coOwners ? `Up to ${plan.coOwners}` : 'Not included', included: plan.coOwners > 0 },
+    { label: 'Staff logins', value: plan.staff === 1 ? '1' : `Up to ${plan.staff}`, included: true },
     { label: 'Support', value: plan.support, included: true },
     { label: 'Priority support', value: plan.support === 'Priority' ? 'Included' : 'Not included', included: plan.support === 'Priority' },
   ];
